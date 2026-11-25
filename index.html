@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TortillaLand · Fan site</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: alegre, suave y moderna; serena y luminosa en el homenaje
+   IDEA: una tortilla dorada flotando entre nubes pastel, vista a través de cristal esmerilado
+   PICTURE: tortilla 3D suave con brillo, orbitada por tarjetas de vidrio con datos de la serie
+   COLOUR and TYPE: melocotón, mantequilla y menta pastel con tinta ciruela profunda; Outfit + DM Sans
+   LAYOUT: héroe amplio, bandas de vidrio sobre manchas difuminadas, cuadrícula de jugadores, homenaje en lavanda al atardecer */
+:root{--bg:#fff7f1;--surf:rgba(255,255,255,.8);--dlg:rgba(255,250,246,.82);--bd:rgba(255,220,210,.35);--h1a:#2b2338;--h1b:#c0603f;--h1c:#e39a2b;--tr1:#ece6ff;--tr2:#f9e3ef;--tr3:#ffe9d9;--trb1:#cbbcff;--trb2:#ffd2b5;--st1:rgba(255,211,194,.6);--st2:rgba(201,240,220,.6);--st3:rgba(255,238,176,.65);--st4:rgba(207,230,255,.65);--blob:.75;--ink:#2b2338;--mut:#655c74;--peach:#ffd3c2;--butter:#ffeeb0;--mint:#c9f0dc;--sky:#cfe6ff;--lav:#e3dbff;--rose:#ffc9dc;--acc:#ff8a6b;--gold:#f3b24c;--glass:rgba(255,255,255,.55);--line:rgba(255,255,255,.75);color-scheme:light}
+:root[data-mode=dark]{color-scheme:dark;--bg:#17142a;--surf:rgba(255,255,255,.08);--dlg:rgba(32,27,56,.85);--bd:rgba(10,8,25,.5);--ink:#f3eefc;--mut:#b9b0cf;--peach:#6b3f52;--butter:#5c4d2e;--mint:#22514a;--sky:#26406b;--lav:#3f3470;--rose:#5f3450;--acc:#ffa58a;--glass:rgba(42,36,72,.5);--line:rgba(255,255,255,.12);--h1a:#ffffff;--h1b:#ffb59a;--h1c:#ffd27a;--tr1:#1d1838;--tr2:#251a3a;--tr3:#2a1f2e;--trb1:#4b3a99;--trb2:#7a3f4f;--st1:rgba(255,160,140,.14);--st2:rgba(120,220,180,.13);--st3:rgba(255,220,120,.13);--st4:rgba(130,180,255,.14);--blob:.45}
+body,.glass,nav{transition:background-color .5s,color .5s,border-color .5s}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "DM Sans",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Outfit,system-ui,sans-serif;line-height:1.05;text-wrap:balance;margin:0;letter-spacing:-.02em}
+h2{font-size:clamp(32px,5vw,50px);font-weight:800;margin-bottom:12px}h3{font-size:20px;font-weight:700}
+a{color:inherit}button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+.band{padding:clamp(48px,7vw,104px) max(5vw,16px);position:relative}.wrap{max-width:1240px;margin:0 auto;position:relative}
+.lead{max-width:64ch;color:var(--mut);font-size:17px;margin:0}
+/* fondo de manchas difuminadas */
+.blobs{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.blobs i{position:absolute;border-radius:50%;filter:blur(70px);opacity:var(--blob);animation:drift 22s ease-in-out infinite alternate}
+.blobs i:nth-child(1){width:46vw;height:46vw;background:var(--peach);left:-10vw;top:-10vw}
+.blobs i:nth-child(2){width:40vw;height:40vw;background:var(--mint);right:-8vw;top:20vh;animation-delay:-6s}
+.blobs i:nth-child(3){width:38vw;height:38vw;background:var(--butter);left:25vw;bottom:-14vw;animation-delay:-11s}
+.blobs i:nth-child(4){width:30vw;height:30vw;background:var(--sky);left:-6vw;bottom:10vh;animation-delay:-3s}
+@keyframes drift{to{transform:translate(6vw,-5vh) scale(1.12)}}
+.glass{background:var(--glass);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border:1px solid var(--line);border-radius:24px;box-shadow:0 10px 40px rgba(120,80,90,.10)}
+/* nav */
+nav{position:sticky;top:12px;z-index:30;margin:12px max(3vw,10px) 0;padding:8px 8px 8px 20px;display:flex;align-items:center;gap:10px;border-radius:999px}
+.logo{font:800 20px Outfit;text-decoration:none;margin-right:auto;display:flex;gap:10px;align-items:center}
+.logo span{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a8,var(--gold));box-shadow:inset -3px -4px 0 rgba(180,110,30,.25)}
+.links{display:flex;gap:2px}
+.links a{text-decoration:none;padding:10px 14px;border-radius:999px;font-weight:500;font-size:15px;transition:background .2s}
+.links a:hover{background:var(--surf)}
+.ib{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surf);display:grid;place-items:center;transition:transform .3s}.ib:hover{transform:rotate(-12deg)}
+.ib svg{width:20px;height:20px}
+.burger{display:none}
+@media(max-width:880px){.burger{display:grid}.links{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;flex-direction:column;padding:10px;border-radius:24px;background:var(--dlg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--line)}.links.open{display:flex}}
+/* hero */
+.hgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:center}
+.pill{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;font-size:14px;font-weight:500;margin-bottom:20px}
+.pill b{width:8px;height:8px;border-radius:50%;background:var(--acc)}
+.hero h1{font-size:clamp(46px,7vw,96px);overflow-wrap:anywhere;font-weight:800;letter-spacing:-.04em;background:linear-gradient(100deg,var(--h1a) 30%,var(--h1b) 70%,var(--h1c));-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:6px}
+.hero p{font-size:19px;color:var(--mut);max-width:40ch;margin:18px 0 0}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:50px;padding:0 24px;border-radius:999px;border:0;background:var(--ink);color:var(--bg);font-weight:700;text-decoration:none;transition:transform .2s,box-shadow .2s;box-shadow:0 10px 24px rgba(43,35,56,.22)}
+.btn:hover{transform:translateY(-2px)}
+.btn.soft{background:var(--surf);color:var(--ink);border:1px solid var(--line);box-shadow:none;backdrop-filter:blur(10px)}
+.scene{position:relative;aspect-ratio:1;max-width:560px;width:100%;margin:0 auto;cursor:pointer}
+.scene>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#isle{animation:bob 7s ease-in-out infinite}
+.t-g{fill:#bfe8c9}.l-g{fill:#efc0a2}.r-g{fill:#dca486}.t-s{fill:#e3def0}.l-s{fill:#c9c1dc}.r-s{fill:#b2a9ca}
+.t-p{fill:#ffe6a6}.t-w{fill:#fff4e2}.l-w{fill:#f5e1c6}.r-w{fill:#e6ccab}.t-r{fill:#ffb8a6}.l-r{fill:#f39c88}.r-r{fill:#e08672}
+.t-k{fill:#d9a77c}.l-k{fill:#b9825a}.r-k{fill:#a06e4a}
+.isle path{stroke-linejoin:round;stroke-width:2.5}.isle .t-g,.isle .t-p{stroke:rgba(255,255,255,.55)}
+.leaf{fill:#9fdcb0}.leaf2{fill:#b9ebc6}.win{fill:#8fb8e8;transition:fill .6s}.door{fill:#c98a62}
+.sun{transition:transform .8s}.tort{fill:#f6c56a}.tort2{fill:#e9a94a}.tsp{fill:#c98a3a;opacity:.55}
+.moonglow{opacity:0;transition:opacity .8s}.star{fill:#fff;opacity:0;transition:opacity .8s}
+.cl{fill:#fff;opacity:.85}.shadow{fill:#e8b9a0;opacity:.35}
+:root[data-mode=dark] .t-g{fill:#5f9c7b}:root[data-mode=dark] .l-g{fill:#7a5468}:root[data-mode=dark] .r-g{fill:#5f4054}
+:root[data-mode=dark] .t-s{fill:#5d5880}:root[data-mode=dark] .l-s{fill:#48436b}:root[data-mode=dark] .r-s{fill:#3a3559}
+:root[data-mode=dark] .t-p{fill:#c9a76a}:root[data-mode=dark] .t-w{fill:#d9cbb8}:root[data-mode=dark] .l-w{fill:#b4a28f}:root[data-mode=dark] .r-w{fill:#968471}
+:root[data-mode=dark] .t-r{fill:#c9737a}:root[data-mode=dark] .l-r{fill:#a65a64}:root[data-mode=dark] .r-r{fill:#8a4753}
+:root[data-mode=dark] .leaf{fill:#4f8a6c}:root[data-mode=dark] .leaf2{fill:#62a081}:root[data-mode=dark] .win{fill:#ffd27a;filter:drop-shadow(0 0 6px #ffcf6e)}
+:root[data-mode=dark] .tort{fill:#fff1cf}:root[data-mode=dark] .tort2{fill:#f1dcae}:root[data-mode=dark] .tsp{fill:#d9c08f}
+:root[data-mode=dark] .moonglow,:root[data-mode=dark] .star{opacity:1}:root[data-mode=dark] .cl{opacity:.18}:root[data-mode=dark] .shadow{fill:#000;opacity:.3}
+.star{animation:tw 2.6s ease-in-out infinite alternate}@keyframes tw{to{opacity:.3}}
+:root:not([data-mode=dark]) .star{animation:none}
+.cloud{animation:drift2 26s linear infinite}@keyframes drift2{from{transform:translateX(-80px)}to{transform:translateX(420px)}}
+@keyframes bob{50%{transform:translateY(-14px) rotate(3deg)}}
+.chipc{position:absolute;padding:12px 16px;border-radius:18px;font-size:14px;line-height:1.3;animation:bob 8s ease-in-out infinite}
+.chipc strong{display:block;font:800 24px Outfit}
+.c1{left:-2%;top:12%}.c2{right:-2%;top:44%;animation-delay:-2s}.c3{left:10%;bottom:4%;animation-delay:-4s}
+@media(max-width:780px){.hgrid{grid-template-columns:1fr}.scene{max-width:420px}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hero{position:relative;overflow:hidden;isolation:isolate;margin-top:-84px;padding:calc(84px + clamp(36px,6vw,88px)) max(5vw,16px) clamp(56px,8vw,110px);min-height:min(100vh,920px);display:flex;align-items:center}
+.hero>.wrap{width:100%}
+.hbg{position:absolute;inset:-4% 0 0;z-index:-2;-webkit-mask-image:linear-gradient(to bottom,#000 75%,transparent);mask-image:linear-gradient(to bottom,#000 75%,transparent)}
+.hbg img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;filter:blur(3px) saturate(1.15);transform:scale(1.06);animation:kb 26s ease-in-out infinite alternate;transition:filter .8s}
+@keyframes kb{to{transform:scale(1.14) translateY(-1.5%)}}
+.hov{position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(255,247,241,.88) 0%,rgba(255,247,241,.62) 42%,rgba(255,247,241,.22) 75%,rgba(255,247,241,.1) 100%),linear-gradient(to bottom,rgba(255,247,241,.55) 0%,transparent 22%,transparent 70%,var(--bg) 100%);transition:background .6s}
+:root[data-mode=dark] .hov{background:linear-gradient(90deg,rgba(23,20,42,.9) 0%,rgba(23,20,42,.68) 42%,rgba(23,20,42,.38) 75%,rgba(23,20,42,.3) 100%),linear-gradient(to bottom,rgba(23,20,42,.6) 0%,transparent 22%,transparent 70%,var(--bg) 100%)}
+:root[data-mode=dark] .hbg img{filter:blur(3px) brightness(.6) saturate(.9) hue-rotate(-18deg)}
+.hstars{position:absolute;inset:0 0 40%;z-index:-1;opacity:0;transition:opacity .8s;pointer-events:none}
+.hstars i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;box-shadow:0 0 6px #fff;animation:tw 2.6s ease-in-out infinite alternate}
+:root[data-mode=dark] .hstars{opacity:1}
+.htext{animation:rise .9s cubic-bezier(.2,1.2,.4,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(30px)}}
+.hero p{color:var(--ink);opacity:.8}
+.sgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:32px;align-items:center}
+@media(max-width:780px){.sgrid{grid-template-columns:1fr}}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:32px}
+.stat{padding:22px}
+.stat strong{display:block;font:800 clamp(36px,5vw,52px)/1 Outfit;margin-bottom:6px}
+.stat span{color:var(--mut);font-size:15px}
+.stat:nth-child(1){background:var(--st1)}.stat:nth-child(2){background:var(--st2)}.stat:nth-child(3){background:var(--st3)}.stat:nth-child(4){background:var(--st4)}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* tabs */
+.tabs{display:inline-flex;gap:4px;padding:5px;border-radius:999px;margin:24px 0;flex-wrap:wrap}
+.tab{min-height:42px;padding:0 18px;border-radius:999px;border:0;background:transparent;font-weight:700;font-size:15px;transition:.25s}
+.tab[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+/* timeline */
+.tl{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.ep{opacity:0;transform:translateY(18px) scale(.98);transition:opacity .6s,transform .6s}
+.ep.in{opacity:1;transform:none}
+.card{padding:22px;height:100%;cursor:pointer;transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column;gap:6px}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 50px rgba(120,80,90,.16)}
+.card time{font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;align-self:flex-start;white-space:nowrap}
+.s1 time{background:var(--peach)}.s2 time{background:var(--mint)}.s3 time{background:var(--lav)}
+.card p{margin:0;color:var(--mut);font-size:15px}
+.more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s}.more>div{overflow:hidden;color:var(--ink);font-size:15px}
+.ep.open .more{grid-template-rows:1fr}.ep.open .more>div{padding-top:8px;border-top:1px dashed rgba(43,35,56,.2);margin-top:6px}
+.card small{color:var(--acc);font-weight:700;margin-top:auto;padding-top:6px}
+/* creadores */
+.crew{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:28px}
+.cr{padding:22px;display:flex;flex-direction:column;gap:10px}
+.cr small{font-weight:700;color:var(--acc)}
+.cr p{margin:0;color:var(--mut);font-size:15px}
+.av{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font:800 20px Outfit;color:#2b2338;flex:none;box-shadow:inset 0 -6px 14px rgba(255,255,255,.5),0 6px 16px rgba(120,80,90,.12)}
+/* participantes */
+.tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:24px 0}
+.search{flex:1 1 260px;display:flex;align-items:center;gap:10px;padding:0 18px;border-radius:999px;min-height:52px}
+.search input{flex:1;border:0;background:transparent;font:16px "DM Sans";color:var(--ink);outline:0;min-height:48px}
+.tools .tabs{margin:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.pl{border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:22px;padding:18px 12px;text-align:center;transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column;align-items:center;gap:8px;animation:fadeup .5s both}
+.pl:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(120,80,90,.14)}
+.pl .av{width:64px;height:64px;font-size:22px}
+.pl b{font-size:15px;overflow-wrap:anywhere}
+.pl span{font-size:13px;color:var(--mut)}
+.pl.km{border:2px solid #c9b8ff;background:var(--lav)}
+@keyframes fadeup{from{opacity:0;transform:translateY(10px)}}
+.empty{grid-column:1/-1;padding:40px;text-align:center;color:var(--mut)}
+.note{font-size:13px;color:var(--mut);margin-top:16px}
+.count{font-size:14px;color:var(--mut)}
+/* modal */
+dialog{border:0;padding:0;max-width:440px;width:calc(100% - 32px);border-radius:28px;background:var(--dlg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);color:var(--ink);box-shadow:0 30px 80px rgba(60,30,50,.25)}
+dialog[open]{animation:pop .35s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{opacity:0;transform:scale(.9) translateY(20px)}}
+dialog::backdrop{background:var(--bd);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.mh{padding:28px 28px 0;display:flex;gap:16px;align-items:center}.mh .av{width:80px;height:80px;font-size:28px}
+.mb{padding:16px 28px 28px}.mb p{color:var(--mut)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chip{font-size:13px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--mint)}
+.x{position:absolute;top:14px;right:14px}
+/* homenaje */
+/* figura y reproductor del homenaje */
+.kcol{display:grid;gap:18px;justify-items:center}
+.kfig{position:relative;width:100%;max-width:360px;aspect-ratio:3/4;display:grid;place-items:center}
+.kfig .ring{position:absolute;inset:8% 0 12%;border-radius:50%;background:conic-gradient(from 0deg,#cbbcff,#ffc9dc,#ffd9a8,#c9f0dc,#cbbcff);filter:blur(30px);opacity:.75;animation:sp 18s linear infinite}
+.kfig .disc{position:absolute;width:86%;aspect-ratio:1;border-radius:50%;top:10%}
+.kfig .skin{position:relative;height:84%;width:auto;image-rendering:pixelated;filter:drop-shadow(0 24px 30px rgba(60,30,80,.35));animation:bob 6s ease-in-out infinite;margin-top:-8%}
+.kfig.playing .ring{animation-duration:5s;opacity:.95}
+.kfig.playing .skin{animation:dance .9s ease-in-out infinite alternate}
+@keyframes dance{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-10px) rotate(2deg)}}
+.ktag{position:absolute;bottom:0;left:50%;transform:translateX(-50%);padding:12px 22px;border-radius:20px;text-align:center;white-space:nowrap}
+.ktag strong{display:block;font:800 26px/1 Outfit}.ktag span{font-size:14px;color:var(--mut)}
+.ktag .flag{display:flex;width:44px;height:20px;border-radius:5px;overflow:hidden;margin:6px auto 0;flex-direction:column}
+.player{width:100%;max-width:420px;display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:24px}
+.ppb{flex:none;width:56px;height:56px;border-radius:50%;border:0;background:var(--ink);color:var(--bg);display:grid;place-items:center;box-shadow:0 8px 20px rgba(43,35,56,.25);transition:transform .2s}
+.ppb:hover{transform:scale(1.06)}.ppb svg{width:22px;height:22px}
+.pinfo{flex:1;display:grid;gap:2px}
+.pinfo b{font:700 16px Outfit}.pinfo>span{font-size:13px;color:var(--mut)}
+.times{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);font-variant-numeric:tabular-nums}
+#seek{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:99px;background:linear-gradient(90deg,var(--acc) var(--p,0%),rgba(128,110,150,.25) var(--p,0%));margin:8px 0 2px;cursor:pointer}
+#seek::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--acc);box-shadow:0 2px 6px rgba(0,0,0,.2)}
+#seek::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--acc)}
+#viz{flex:none;width:72px;height:36px}
+@media(max-width:420px){#viz{display:none}}@media(max-width:780px){.kfig{max-width:280px}}
+.trib{background:linear-gradient(160deg,var(--tr1) 0%,var(--tr2) 45%,var(--tr3) 100%);overflow:hidden}
+.trib:before,.trib:after{content:"";position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}.trib>.wrap{z-index:1}
+.trib:before{width:420px;height:420px;background:var(--trb1);left:-120px;top:-80px;opacity:.6}
+.trib:after{width:380px;height:380px;background:var(--trb2);right:-100px;bottom:-100px;opacity:.7}
+.tgrid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(28px,5vw,64px);align-items:center}
+@media(max-width:780px){.tgrid{grid-template-columns:1fr}}
+.halo{aspect-ratio:1;max-width:380px;width:100%;margin:0 auto;position:relative;display:grid;place-items:center}
+.halo .ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,#cbbcff,#ffc9dc,#ffd9a8,#c9f0dc,#cbbcff);filter:blur(28px);opacity:.75;animation:sp 18s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.halo .core{position:relative;width:78%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;text-align:center;padding:20px}
+.halo .core strong{font:800 clamp(34px,5vw,48px)/1 Outfit;letter-spacing:-.03em}
+.halo .core span{display:block;color:var(--mut);margin-top:8px}
+.halo .flag{display:flex;width:64px;height:30px;border-radius:8px;overflow:hidden;margin:14px auto 0;flex-direction:column}
+.flag i{flex:1}.flag i:nth-child(odd){background:#8fb6ff}.flag i:nth-child(2){background:#fff}
+.yrs{font:700 18px Outfit;color:var(--acc);margin:6px 0 16px}
+.trib p.bio{color:var(--mut);max-width:62ch;margin:0}
+.facts{list-style:none;padding:0;margin:20px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.facts li{padding:14px 16px;border-radius:18px;font-size:15px}
+@media(max-width:520px){.facts{grid-template-columns:1fr}}
+blockquote{margin:0 0 20px;padding:20px 24px;border-radius:22px;font:500 20px/1.4 Outfit}
+blockquote cite{display:block;font:400 14px "DM Sans";color:var(--mut);margin-top:8px;font-style:normal}
+.cpanel{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center;padding:18px 20px;border-radius:24px}
+.cbig strong{display:block;font:800 clamp(40px,6vw,56px)/1 Outfit;letter-spacing:-.03em;font-variant-numeric:tabular-nums;background:linear-gradient(180deg,#ffb35c,#ff7a6b);-webkit-background-clip:text;background-clip:text;color:transparent;transition:transform .25s cubic-bezier(.2,1.6,.4,1);transform-origin:left center}
+.cbig strong.bump{transform:scale(1.18)}
+.cbig span{font-size:13px;color:var(--mut);white-space:nowrap}
+.crow{display:flex;flex-wrap:nowrap;gap:6px;align-items:flex-end;height:40px;overflow:hidden}
+.cmore{flex:none;font:700 13px Outfit;padding:4px 10px;border-radius:999px;background:linear-gradient(90deg,#ffd27a,#ff9a7a);color:#3a2230;align-self:center;white-space:nowrap}
+.cgoal{margin-top:14px;display:grid;gap:6px}
+.gbar{height:10px;border-radius:99px;background:rgba(128,110,150,.2);overflow:hidden}
+.gbar i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#ffd27a,#ff9a7a,#c9a8ff);transition:width .7s cubic-bezier(.2,1,.3,1)}
+.cgoal span{font-size:13px;color:var(--mut)}
+.crow-act{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:16px}
+@media(max-width:420px){.cpanel{grid-template-columns:1fr}}
+
+.fl{flex:none;width:12px;height:22px;border-radius:50% 50% 45% 45%;background:radial-gradient(circle at 50% 70%,#fff8d6,#ffc46b 55%,#ff9a7a);box-shadow:0 0 14px #ffc46b;animation:flk 1.4s ease-in-out infinite alternate}
+@keyframes flk{to{transform:scaleY(.85) translateY(2px);opacity:.8}}
+.msgs{margin-top:18px;display:grid;gap:8px}
+.msgs form{display:flex;gap:8px;flex-wrap:wrap}
+.msgs .search{min-height:50px}
+.msg{padding:12px 16px;border-radius:16px;font-size:15px;animation:fadeup .4s both}
+.help{font-size:14px;color:var(--mut);margin-top:24px}
+footer{font-size:14px;color:var(--mut)}
+footer .glass{padding:28px}
+footer ul{padding-left:18px;margin:10px 0 0}
+/* anuncios */
+.ad.band{padding-top:0;padding-bottom:clamp(24px,3vw,40px)}
+.ad .wrap{display:grid;justify-items:center;gap:6px}
+.adl{font-size:11px;letter-spacing:.02em;color:var(--mut);opacity:.8}
+.adbox{width:100%;max-width:980px;border-radius:18px;padding:8px;display:flex;justify-content:center;align-items:center;overflow:hidden}
+.adbox iframe{border:0;width:100%;max-width:970px;display:block;background:transparent}
+/* muro */
+.muro{margin-top:clamp(48px,6vw,80px)}
+.mhead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.mform{display:grid;gap:10px;padding:16px;border-radius:24px}
+.mform input,.mform textarea{width:100%;font:16px "DM Sans";color:var(--ink);background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:12px 16px;resize:vertical;outline:0}
+.mform input:focus,.mform textarea:focus{border-color:var(--acc)}
+.mrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.mrow .btn{margin-left:auto}
+.wall{columns:3 260px;column-gap:14px;margin-top:18px}
+.wcard{break-inside:avoid;margin:0 0 14px;padding:16px 18px;border-radius:20px;position:relative;animation:fadeup .45s both}
+.wcard p{margin:0 0 10px;font-size:16px;color:var(--ink);overflow-wrap:anywhere}
+.wcard footer{all:unset;display:flex;gap:8px;align-items:center;font-size:13px;color:var(--mut)}
+.wcard footer b{color:var(--ink);font-weight:700}
+.wcard .del{position:absolute;top:8px;right:8px;width:32px;height:32px;border-radius:50%;border:0;background:var(--surf);font-size:14px}
+.wcard.mine{border:1px dashed var(--acc)}
+.wact{display:flex;gap:12px;align-items:center;margin-top:10px;font-size:13px;font-weight:700}
+.wact a{color:var(--acc)}
+.wact button{border:0;background:none;padding:0;color:var(--mut);font-weight:700}
+.wempty{padding:28px;text-align:center;color:var(--mut);border-radius:20px}
+/* mini reproductor */
+.mini{position:fixed;left:50%;bottom:14px;z-index:35;width:min(460px,calc(100% - 20px));display:flex;align-items:center;gap:12px;padding:8px 10px 8px 14px;border-radius:22px;transform:translate(-50%,150%);opacity:0;transition:transform .45s cubic-bezier(.2,1.2,.4,1),opacity .3s;pointer-events:none}
+.mini.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+.mini img{height:46px;width:auto;image-rendering:pixelated}
+.mi{flex:1;display:grid;text-decoration:none;line-height:1.25}
+.mi b{font:700 15px Outfit}.mi span{font-size:12px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mbar{display:block;height:4px;border-radius:9px;background:rgba(128,110,150,.25);margin-top:6px;overflow:hidden}
+.mbar i{display:block;height:100%;width:0;background:var(--acc)}
+.mini .ib svg{width:18px;height:18px}
+body.mini-on .toast{bottom:92px}
+.toast{position:fixed;left:50%;bottom:24px;transition:transform .4s,bottom .4s;transform:translate(-50%,120px);padding:12px 20px;border-radius:999px;font-weight:700;transition:transform .4s;z-index:40}
+.toast.show{transform:translate(-50%,0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.ep{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="blobs" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+<nav class="glass">
+  <a class="logo" href="#inicio"><span></span>TortillaLand</a>
+  <div class="links" id="links"><a href="#serie">La serie</a><a href="#episodios">Episodios</a><a href="#creadores">Creadores</a><a href="#participantes">Participantes</a><a href="#homenaje">Homenaje</a></div>
+  <button class="ib" id="mode" aria-label="Cambiar a modo noche"></button>
+  <button class="ib" id="snd" aria-label="Activar o silenciar sonidos"></button>
+  <button class="ib burger" id="burger" aria-label="Abrir menú"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hbg" id="hbg"><img src="img/tortillaland-logo.jpg" alt="" width="603" height="331"></div>
+  <div class="hov"></div>
+  <div class="hstars" id="hstars" aria-hidden="true"></div>
+  <div class="wrap hgrid">
+  <div class="htext">
+    <span class="pill glass"><b></b>Serie de rol en Minecraft · 2021–2022</span>
+    <h1>TortillaLand</h1>
+    <p>El servidor que juntó a decenas de streamers hispanos para rolear, traicionarse y armar el caos más divertido de Twitch y YouTube.</p>
+    <div class="cta"><a class="btn" href="#participantes">Ver participantes →</a><a class="btn soft" href="#homenaje">Homenaje a Komanche</a></div>
+  </div>
+  <div class="scene" id="scene">
+    <svg viewBox="0 0 400 400" role="img" aria-label="Ilustración: isla de bloques flotante con una casita, un árbol y un sol en forma de tortilla">
+      <defs>
+        <radialGradient id="mg"><stop offset="0" stop-color="#fff1cf" stop-opacity=".55"/><stop offset="1" stop-color="#fff1cf" stop-opacity="0"/></radialGradient>
+        <filter id="soft"><feGaussianBlur stdDeviation="6"/></filter>
+      </defs>
+      <g id="stars"></g>
+      <g class="sun" transform="translate(318 74)">
+        <circle class="moonglow" r="90" fill="url(#mg)"/>
+        <circle class="tort2" r="44" cy="4"/><circle class="tort" r="44"/>
+        <g class="tsp"><circle cx="-16" cy="-12" r="6"/><circle cx="12" cy="-20" r="4"/><circle cx="18" cy="8" r="7"/><circle cx="-6" cy="18" r="5"/><circle cx="-26" cy="8" r="3.5"/></g>
+      </g>
+      <g class="cloud"><g filter="url(#soft)"><ellipse class="cl" cx="40" cy="60" rx="46" ry="16"/><ellipse class="cl" cx="64" cy="50" rx="30" ry="16"/></g></g>
+      <ellipse class="shadow" cx="200" cy="384" rx="110" ry="12" filter="url(#soft)"/>
+      <g transform="translate(-50 -34) scale(1.25)"><g id="isle" class="isle"></g></g>
+      <g class="cloud" style="animation-duration:34s;animation-delay:-18s"><g filter="url(#soft)"><ellipse class="cl" cx="20" cy="250" rx="40" ry="12"/></g></g>
+    </svg>
+    <div class="chipc glass c1"><strong>34</strong>creadores en la T1</div>
+    <div class="chipc glass c2"><strong>36</strong>anunciados en la T2</div>
+    <div class="chipc glass c3"><strong>ESLAND</strong>Mejor Serie</div>
+  </div>
+  </div>
+</header>
+
+<section class="band" id="serie"><div class="wrap">
+  <h2>¿Qué es TortillaLand?</h2>
+  <p class="lead">Un evento de Minecraft ideado por AuronPlay y Perxitaa y montado técnicamente por HeberonYT y JaviDMr10, los mismos detrás de Karmaland. Funciona como los servidores de rol de GTA: cada creador interpreta a su personaje, pero sin rol estricto. Lo que manda son las situaciones cómicas, las traiciones y las jugarretas.</p>
+
+  <div class="stats">
+    <div class="stat glass"><strong>2</strong><span>temporadas, en 2021 y 2022</span></div>
+    <div class="stat glass"><strong>48</strong><span>creadores distintos entre ambas</span></div>
+    <div class="stat glass"><strong>4</strong><span>personas detrás de la idea y el servidor</span></div>
+    <div class="stat glass"><strong>1</strong><span>ESLAND a Mejor Serie por la T1</span></div>
+  </div>
+</div></section>
+
+<section class="band" id="episodios"><div class="wrap">
+  <h2>Episodios y momentos clave</h2>
+  <p class="lead">TortillaLand se emitió en directos diarios en el canal de cada participante, así que no tiene episodios con título oficial. Esta es la cronología de sus momentos clave. Toca una tarjeta para ver más.</p>
+  <div class="tabs glass" id="eptabs"></div>
+  <ol class="tl" id="tl"></ol>
+</div></section>
+
+<aside class="ad band" data-slot="episodios" hidden aria-label="Publicidad"><div class="wrap"><span class="adl">Publicidad</span><div class="adbox glass"></div></div></aside>
+<section class="band" id="creadores"><div class="wrap">
+  <h2>Los creadores</h2>
+  <p class="lead">Dos streamers tuvieron la idea y dos constructores la convirtieron en un servidor.</p>
+  <div class="crew" id="crew"></div>
+</div></section>
+
+<section class="band" id="participantes"><div class="wrap">
+  <h2>Participantes</h2>
+  <p class="lead">Las listas oficiales de ambas temporadas. Busca por nombre o filtra por temporada, y toca a alguien para ver su ficha.</p>
+  <div class="tools">
+    <label class="search glass"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Buscar streamer…" aria-label="Buscar streamer"></label>
+    <div class="tabs glass" id="ptabs"></div>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="grid" id="grid"></div>
+  <p class="note">Las iniciales sustituyen a las fotos. La lista de la T2 es la de 36 nombres confirmados en el tráiler; hubo cambios durante la emisión.</p>
+</div></section>
+
+<aside class="ad band" data-slot="participantes" hidden aria-label="Publicidad"><div class="wrap"><span class="adl">Publicidad</span><div class="adbox glass"></div></div></aside>
+<section class="band trib" id="homenaje"><div class="wrap tgrid">
+  <div class="kcol">
+    <div class="kfig" id="kfig">
+      <div class="ring"></div>
+      <div class="disc glass"></div>
+      <img class="skin" src="img/komanche-skin.png" width="371" height="703" alt="Skin de Minecraft de Komanche: cabeza gris con antifaz oscuro, camisa blanca, corbata roja y chaleco negro">
+      <div class="ktag glass"><strong>Komanche</strong><span>1996 – 2026</span><div class="flag" aria-label="Bandera de El Salvador"><i></i><i></i><i></i></div></div>
+    </div>
+    <div class="player glass" id="player">
+      <button class="ppb" id="pp" aria-label="Reproducir canción"></button>
+      <div class="pinfo">
+        <b>Comanche v2</b><span>Canción tributo de dani_villa</span>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="Posición de la canción">
+        <div class="times"><span id="tcur">0:00</span><span id="tdur">2:56</span></div>
+      </div>
+      <canvas id="viz" width="96" height="48" aria-hidden="true"></canvas>
+      <audio id="song" src="audio/komanche.mp3" preload="metadata"></audio>
+    </div>
+  </div>
+  <div>
+    <h2>En memoria de Komanche</h2>
+    <div class="yrs">Carlos Mauricio Gómez · El Salvador</div>
+    <p class="bio">Nació el 27 de septiembre de 1996 en San Sebastián (San Vicente, El Salvador). Empezó en Twitch en 2015 con GTA, Minecraft y Fortnite y formó parte del reparto anunciado para TortillaLand 2. Falleció el 25 de octubre de 2026 en Monterrey (México), a los 30 años. Las autoridades no han dado a conocer una causa oficial.</p>
+    <ul class="facts">
+      <li class="glass">Coorganizó los <b>Squid Craft Games</b> con AuronPlay y Rubius, ganadores del ESLAND a mejor miniserie.</li>
+      <li class="glass">Reunió cerca de <b>1,7 millones</b> de seguidores en Twitch.</li>
+      <li class="glass">Siempre llevó a <b>El Salvador</b> por bandera en sus proyectos.</li>
+      <li class="glass">AuronPlay, Ibai, Spreen, Westcol y muchos más lo despidieron en redes.</li>
+    </ul>
+    <blockquote class="glass">“Vuela alto mi Komanche, gracias por llevar a El Salvador siempre contigo”<cite>Byron Reyes, su representante</cite></blockquote>
+    <div class="cpanel glass">
+      <div class="cbig"><strong id="cnum">0</strong><span id="clabel">velas encendidas</span></div>
+      <div class="crow" id="flames" aria-hidden="true"></div>
+    </div>
+    <div class="cgoal"><div class="gbar"><i id="gfill"></i></div><span id="glabel"></span></div>
+    <div class="crow-act"><button class="btn" id="candle">Encender una vela</button><span class="count" id="cnote">Se guardan en este navegador</span></div>
+    <p class="help">Canción tributo “Comanche v2”, creada por dani_villa. Si estás pasando por un momento difícil, no estás solo: en <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a> encuentras líneas de ayuda gratuitas en tu país.</p>
+  </div>
+</div>
+<div class="wrap muro">
+  <div class="mhead"><div><h2>Muro de mensajes</h2><p class="lead">Deja unas palabras para Komanche. Los mensajes de la comunidad aparecen aquí.</p></div><span class="count" id="mcount"></span></div>
+  <form id="mform" class="mform glass">
+    <input id="mname" maxlength="30" placeholder="Tu nombre o apodo (opcional)" aria-label="Tu nombre o apodo">
+    <textarea id="mtext" maxlength="140" rows="2" placeholder="Escribe tu mensaje de despedida…" aria-label="Mensaje"></textarea>
+    <div class="mrow"><span class="count" id="mleft">140</span><span class="count" id="mnote">Tu mensaje se guarda en este navegador</span><button class="btn" type="submit">Dejar mensaje</button></div>
+  </form>
+  <div class="wall" id="wall"></div>
+</div></section>
+
+<aside class="ad band" data-slot="pie" hidden aria-label="Publicidad"><div class="wrap"><span class="adl">Publicidad</span><div class="adbox glass"></div></div></aside>
+<footer class="band"><div class="wrap glass">
+  <h3>TortillaLand · fan site</h3>
+  <p style="margin:6px 0 0">Página hecha por fans, sin relación oficial con los creadores. El logo de TortillaLand pertenece a sus creadores. Minecraft es marca de Mojang. Datos tomados de:</p>
+  <ul>
+    <li><a href="https://www.vidaextra.com/guias-y-trucos/todo-tortillaland-que-cuando-regresa-quienes-participan-como-se-juega">VidaExtra: todo sobre TortillaLand</a></li>
+    <li><a href="https://trome.com/tecnologia/twitch-tortillaland-2-lanza-su-trailer-oficial-fecha-y-participantes-de-la-serie-de-minecraft-de-auronplay-ibai-llanos-biyin-djmariio-arigameplays-tecnologia-noticia/">Trome: participantes de TortillaLand 2</a></li>
+    <li><a href="https://www.millenium.gg/noticias/50364.html">Millenium: los Teletubbies de TortillaLand 2</a></li>
+    <li><a href="https://www.publimetro.com.mx/entretenimiento/2026/10/26/quien-era-komanche-famoso-streamer-hallado-sin-vida-en-monterrey/">Publimetro: quién era Komanche</a></li>
+    <li><a href="https://www.democrata.es/en/society/komanche-dies-at-30-who-was-the-streamer-who-boosted-the-squid-craft-games-with-auronplay-and-rubius/amp/">Demócrata: Komanche y los Squid Craft Games</a></li>
+  </ul>
+</div></footer>
+
+<dialog id="dlg"><button class="ib x" id="xbtn" aria-label="Cerrar">✕</button><div class="mh" id="mh"></div><div class="mb" id="mbody"></div></dialog>
+<div class="mini glass" id="mini" aria-hidden="true">
+  <img src="img/komanche-skin.png" alt="" width="371" height="703">
+  <a class="mi" href="#homenaje"><b>Comanche v2</b><span>Tributo a Komanche · dani_villa</span><span class="mbar"><i id="mprog"></i></span></a>
+  <button class="ib" id="mpp" aria-label="Pausar canción"></button>
+  <button class="ib" id="mx" aria-label="Cerrar reproductor">✕</button>
+</div>
+<div class="toast glass" id="toast" role="status"></div>
+
+<script src="config.js"></script>
+<script src="js/store.js"></script>
+<script>
+{
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const toast=t=>{const el=$('#toast');el.textContent=t;el.classList.add('show');clearTimeout(toast.h);toast.h=setTimeout(()=>el.classList.remove('show'),1800)};
+
+/* sonido suave (Web Audio) */
+let ac=null,on=store.get('tl-snd',true);
+const icOn='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>';
+const icOff='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="m17 9 5 6M22 9l-5 6"/></svg>';
+const sb=$('#snd');const paint=()=>{sb.innerHTML=on?icOn:icOff};paint();
+function tone(f,d=.18,v=.05,type='sine'){if(!on)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime;o.type=type;o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.015);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+d+.02)}catch(e){}}
+const sfx={click:()=>tone(880,.12,.035),pop:()=>{tone(660,.14,.04);setTimeout(()=>tone(990,.18,.035),60)},bell:()=>[523,659,784,1047].forEach((f,i)=>setTimeout(()=>tone(f,1.2,.04,'triangle'),i*160))};
+sb.onclick=()=>{on=!on;store.set('tl-snd',on);paint();sfx.click();toast(on?'Sonido activado':'Sonido silenciado')};
+document.addEventListener('click',e=>{if(e.target.closest('.btn:not(#candle):not([type=submit]),.tab,.links a'))sfx.click()});
+$('#burger').onclick=()=>$('#links').classList.toggle('open');
+document.querySelectorAll('.links a').forEach(a=>a.onclick=()=>$('#links').classList.remove('open'));
+
+/* modo noche */
+const root=document.documentElement;
+const sunI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const moonI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
+let mode=store.get('tl-mode',null)||root.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+const mb=$('#mode');
+function setMode(m){mode=m;root.dataset.mode=m;mb.innerHTML=m==='dark'?sunI:moonI;mb.setAttribute('aria-label',m==='dark'?'Cambiar a modo día':'Cambiar a modo noche')}
+setMode(mode==='dark'?'dark':'light');
+mb.onclick=()=>{setMode(mode==='dark'?'light':'dark');store.set('tl-mode',mode);if(mode==='dark'){tone(392,.5,.04);setTimeout(()=>tone(294,.7,.035),120)}else{tone(587,.3,.04);setTimeout(()=>tone(880,.4,.035),100)}toast(mode==='dark'?'Modo noche 🌙':'Modo día ☀️')};
+
+/* isla de bloques */
+const OX=200,OY=168;
+const bl=(i,j,k,t)=>{const x=OX+(i-j)*20,y=OY+(i+j)*10-k*22;return `<path class="t-${t}" d="M${x} ${y}l20 10-20 10-20-10z"/><path class="l-${t==='p'?'g':t}" d="M${x-20} ${y+10}l20 10v22l-20-10z"/><path class="r-${t==='p'?'g':t}" d="M${x} ${y+20}l20-10v22l-20 10z"/>`};
+const B=[];
+for(let i=0;i<6;i++)for(let j=0;j<6;j++){if((i===0&&j===0)||(i===5&&j===5)||(i===0&&j===5))continue;const path=(i===3&&j>=3)||(j===3&&i>=3&&i<5);B.push([i,j,0,path?'p':'g'])}
+for(let i=1;i<5;i++)for(let j=1;j<5;j++){if((i===1&&j===1)||(i===4&&j===4))continue;B.push([i,j,-1,'s'])}
+[[2,2],[2,3],[3,2],[3,3]].forEach(([i,j])=>B.push([i,j,-2,'s']));B.push([3,3,-3,'s']);
+[[1,1],[2,1],[1,2],[2,2]].forEach(([i,j])=>{B.push([i,j,1,'w']);B.push([i,j,2,'r'])});
+B.push([4,1,1,'k']);B.push([4,1,2,'k']);
+B.sort((a,b)=>a[2]-b[2]||(a[0]+a[1])-(b[0]+b[1]));
+let isle=B.map(b=>bl(...b)).join('');
+// ventana y puerta en la casa
+const wx=OX+(1-2)*20,wy=OY+(1+2)*10-22;isle+=`<path class="win" d="M${wx-15} ${wy+16}l9 4.5v9l-9-4.5z"/><path class="door" d="M${wx-6} ${wy+23}l5 2.5v16l-5-2.5z"/>`;
+const rx=OX+(2-1)*20,ry=OY+(2+1)*10-22;isle+=`<path class="win" d="M${rx+5} ${ry+25}l10-5v9l-10 5z"/>`;
+// copa del árbol
+const tx=OX+(4-1)*20,ty=OY+(4+1)*10-3*22+10;isle+=`<circle class="leaf" cx="${tx}" cy="${ty}" r="26"/><circle class="leaf2" cx="${tx-8}" cy="${ty-10}" r="15"/><circle class="leaf" cx="${tx+14}" cy="${ty+6}" r="14"/>`;
+// tortilla en el camino
+const px=OX+(4-3)*20,py=OY+(4+3)*10;isle+=`<ellipse class="tort2" cx="${px}" cy="${py+11}" rx="9" ry="4.5"/><ellipse class="tort" cx="${px}" cy="${py+10}" rx="9" ry="4.5"/>`;
+$('#isle').innerHTML=isle;
+let stH='';for(let i=0;i<22;i++){const x=(i*73)%380+10,y=(i*41)%170+6;stH+=`<circle class="star" cx="${x}" cy="${y}" r="${i%3?1.2:2}" style="animation-delay:${(i%6)*.4}s"/>`}$('#stars').innerHTML=stH;
+const sc=$('#scene');
+sc.addEventListener('click',()=>{sfx.pop();toast(mode==='dark'?'Buenas noches, TortillaLand 🌙':'¡Bienvenido a TortillaLand! 🌮')});
+
+/* fondo de portada: estrellas y paralaje */
+let hs='';for(let i=0;i<34;i++)hs+=`<i style="left:${(i*29)%100}%;top:${(i*47)%100}%;animation-delay:${(i%7)*.35}s;transform:scale(${i%3?.7:1.2})"></i>`;$('#hstars').innerHTML=hs;
+const hbg=$('#hbg');if(!matchMedia('(prefers-reduced-motion:reduce)').matches)addEventListener('scroll',()=>{const y=scrollY;if(y<1200)hbg.style.transform=`translateY(${y*.3}px)`},{passive:true});
+/* avatares de iniciales con degradado pastel */
+function hash(s){let x=2166136261;for(const c of s)x=Math.imul(x^c.charCodeAt(0),16777619);return x>>>0}
+const pals=[['#ffd3c2','#ffeeb0'],['#c9f0dc','#cfe6ff'],['#e3dbff','#ffc9dc'],['#ffeeb0','#c9f0dc'],['#cfe6ff','#e3dbff'],['#ffc9dc','#ffd3c2']];
+function avatar(n){const p=n==='Komanche'?['#d9ccff','#ffd9e8']:pals[hash(n)%pals.length];const ini=n.replace(/\(.*\)/,'').replace(/[^A-Za-zÁÉÍÓÚÑáéíóúñ0-9 ]/g,'').trim().split(/\s+/).map(w=>w[0]).join('').slice(0,2).toUpperCase()||n.slice(0,2);return `<span class="av" style="background:linear-gradient(135deg,${p[0]},${p[1]})" aria-hidden="true">${esc(ini)}</span>`}
+
+const T1=['AuronPlay','Perxitaa','Karchez','Genesis','Lolito','Axozer','Carola','Deqiuv','Jagger','JuanSGuarnizo','Biyin','Paracetamor','Luzu','Betra','Nia Lakshart','Tanizen','Ibai','Pato de Aqualand','MomonKun','Zorman','Mayichi','Focus','Jacky (CooLifeGame)','AriGameplays','Laura Escanes','Folagor','TheGrefg','Violeta G','Gemita','Polispol','Fargan','Cristinini','Ampeterby','Menos Trece'];
+const T2=['8cho','Ampeterby','AriGameplays','Aroyitt','AuronPlay','Axozer','Barbeq','Barcagamer','Betra','Biyin','Carola','Carrera','Cristinini','Danirep','Deqiuv','Desst3','DJMariio','ElMariana','Focus','Genesis','Ibai','Imantado','Jabu','Jacky (CooLifeGame)','JuanSGuarnizo','Karchez','Komanche','Mayichi','Pato de Aqualand','Perxitaa','Polispol','Reborn','Spreen','Tanizen','Violeta G','Zorman'];
+const info={AuronPlay:'Raúl Álvarez Genes. Streamer español, co-ideador de TortillaLand y organizador de la T2. Líder de los famosos “Teletubbies”.',Perxitaa:'Co-ideador de la serie junto a AuronPlay y participante en ambas temporadas.',Ibai:'Ibai Llanos, streamer español. Uno de los grandes protagonistas de la T1.',JuanSGuarnizo:'Juan Guarnizo, streamer mexicano. Presente en las dos temporadas.',ElMariana:'Streamer mexicano, fichaje estrella de la T2.',Spreen:'Streamer argentino, anunciado entre los primeros fichajes de la T2.',AriGameplays:'Streamer mexicana, presente en las dos temporadas.',Carola:'En la T2 fue víctima de la horda de Teletubbies, que lo hizo volar por los aires. Juró venganza.',Komanche:'Carlos Mauricio Gómez, streamer salvadoreño (1996–2026). Formó parte del reparto anunciado para TortillaLand 2. Ver el homenaje más abajo.',Jabu:'AuronPlay anunció su salida de la T2: “su personaje morirá”.'};
+const all=[...new Set([...T1,...T2])].sort((a,b)=>a.localeCompare(b,'es')).map(n=>({n,s:[T1.includes(n)&&1,T2.includes(n)&&2].filter(Boolean)}));
+
+const crew=[
+ {n:'AuronPlay',r:'Ideó la serie',d:'Raúl Álvarez Genes. Reunió a los creadores, organizó la T2 y luego creó Minecraft Extremo con Heberon.'},
+ {n:'Perxitaa',r:'Ideó la serie',d:'Pensó junto a Auron un evento para juntar a grandes creadores y dar espectáculo.'},
+ {n:'HeberonYT',r:'Construyó el servidor',d:'Administrador del servidor y “dios principal” de TortillaLand. Venía de Karmaland y Planeta Vegetta.'},
+ {n:'JaviDMr10',r:'Construyó el servidor',d:'Co-creador técnico del servidor, también con experiencia en Karmaland y Planeta Vegetta.'}];
+
+const eps=[
+ {s:1,d:'15 ago 2021',t:'Abre TortillaLand',p:'Arranca la primera temporada con 34 creadores.',m:'Los directos se emitieron a la vez en Twitch y YouTube, cada uno desde el punto de vista de su personaje.'},
+ {s:1,d:'Ago–dic 2021',t:'Rol, traiciones y caos',p:'Bromas, alianzas y puñaladas por la espalda entre los vecinos.',m:'Sin guion estricto: cada streamer improvisaba su papel, al estilo de los servidores de rol de GTA.'},
+ {s:1,d:'2021',t:'ESLAND a Mejor Serie',p:'La T1 se lleva el premio por delante de Marbella Vice, Egoland y Arkadia.',m:'El premio confirmó a TortillaLand como uno de los fenómenos del streaming en español de ese año.'},
+ {s:2,d:'12 jul 2022',t:'Anuncio del nuevo reparto',p:'La cuenta oficial empieza a confirmar a los jugadores de la T2.',m:'Spreen, ElMariana, Axozer, Karchez, DJMariio y Biyin estuvieron entre los primeros confirmados.'},
+ {s:2,d:'14 ago 2022',t:'Empieza TortillaLand 2',p:'Estreno de la segunda temporada, con 36 creadores anunciados.',m:'El tráiler oficial presentó el reparto, con AuronPlay también como organizador.'},
+ {s:2,d:'Sep 2022',t:'Los Teletubbies atacan',p:'Una horda de Teletubbies liderada por Auron hace volar a Carola.',m:'Fue uno de los momentos más comentados de la temporada y Carola juró venganza.'},
+ {s:2,d:'4 dic 2022',t:'Último directo',p:'La serie se despide con sus eventos finales.',m:'Fue el cierre de TortillaLand como serie.'},
+ {s:3,d:'2023',t:'Herencia: Minecraft Extremo',p:'Auron y Heberon crean una nueva serie de supervivencia extrema.',m:'Muchos creadores de TortillaLand repitieron en esta serie.'}];
+
+
+/* episodios */
+let es='all';const etabs=[['all','Todo'],['1','Temporada 1'],['2','Temporada 2'],['3','Después']];
+const io='IntersectionObserver' in window?new IntersectionObserver(x=>x.forEach(v=>{if(v.isIntersecting){v.target.classList.add('in');io.unobserve(v.target)}}),{threshold:.12}):null;
+function renderEps(){$('#eptabs').innerHTML=etabs.map(([k,l])=>`<button class="tab" data-k="${k}" aria-pressed="${k===es}">${l}</button>`).join('');
+ $('#tl').innerHTML=eps.filter(e=>es==='all'||e.s==es).map(e=>`<li class="ep s${e.s}"><div class="card glass" tabindex="0" role="button" aria-expanded="false"><time>${e.d}</time><h3>${e.t}</h3><p>${e.p}</p><div class="more"><div>${e.m}</div></div><small>Ver más</small></div></li>`).join('');
+ document.querySelectorAll('.ep').forEach((el,i)=>{el.style.transitionDelay=(i*70)+'ms';io?io.observe(el):el.classList.add('in')})}
+$('#eptabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(b){es=b.dataset.k;renderEps()}});
+$('#tl').addEventListener('click',e=>{const c=e.target.closest('.card');if(!c)return;const li=c.parentNode,o=li.classList.toggle('open');c.setAttribute('aria-expanded',o);c.querySelector('small').textContent=o?'Ver menos':'Ver más';sfx.pop()});
+$('#tl').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('card')){e.preventDefault();e.target.click()}});
+renderEps();
+
+/* creadores */
+$('#crew').innerHTML=crew.map(c=>`<div class="cr glass">${avatar(c.n)}<small>${c.r}</small><h3>${c.n}</h3><p>${c.d}</p></div>`).join('');
+
+/* participantes */
+let ps=store.get('tl-ps','all');const ptabs=[['all','Todas'],['1','T1'],['2','T2'],['both','Ambas']];
+function renderP(){const q=$('#q').value.trim().toLowerCase();
+ $('#ptabs').innerHTML=ptabs.map(([k,l])=>`<button class="tab" data-k="${k}" aria-pressed="${k===ps}">${l}</button>`).join('');
+ const list=all.filter(p=>(ps==='all'||(ps==='both'?p.s.length===2:p.s.includes(+ps)))&&p.n.toLowerCase().includes(q));
+ $('#count').textContent=`${list.length} ${list.length===1?'creador':'creadores'}`;
+ $('#grid').innerHTML=list.length?list.map((p,i)=>`<button class="pl${p.n==='Komanche'?' km':''}" style="animation-delay:${Math.min(i,20)*25}ms" data-n="${esc(p.n)}">${avatar(p.n)}<b>${esc(p.n)}</b><span>${p.s.map(s=>'Temporada '+s).join(' · ')}</span></button>`).join(''):`<div class="empty">No hay nadie con ese nombre en este filtro.</div>`}
+$('#q').addEventListener('input',renderP);
+$('#ptabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(b){ps=b.dataset.k;store.set('tl-ps',ps);renderP()}});
+$('#grid').addEventListener('click',e=>{const b=e.target.closest('.pl');if(!b)return;const p=all.find(x=>x.n===b.dataset.n);
+ $('#mh').innerHTML=`${avatar(p.n)}<div><h3 style="font-size:28px">${esc(p.n)}</h3><div class="chips">${p.s.map(s=>`<span class="chip"${s===2?' style="background:#ffeeb0"':''}>Temporada ${s}</span>`).join('')}</div></div>`;
+ $('#mbody').innerHTML=`<p>${esc(info[p.n]||'Participante de TortillaLand. Sus directos de la serie siguen en sus canales.')}</p><div class="cta" style="margin-top:12px"><a class="btn" href="https://www.twitch.tv/search?term=${encodeURIComponent(p.n.replace(/ \(.*\)/,''))}" target="_blank" rel="noopener">Buscar en Twitch</a>${p.n==='Komanche'?'<a class="btn soft" href="#homenaje" id="toH">Ver homenaje</a>':''}</div>`;
+ const d=$('#dlg');d.showModal?d.showModal():d.setAttribute('open','');sfx.pop();const th=$('#toH');if(th)th.onclick=()=>d.close()});
+$('#xbtn').onclick=()=>$('#dlg').close();
+$('#dlg').addEventListener('click',e=>{if(e.target.id==='dlg')e.target.close()});
+renderP();
+
+/* homenaje */
+
+/* reproductor de la canción tributo */
+const song=$('#song'),pp=$('#pp'),seek=$('#seek'),kfig=$('#kfig'),cv=$('#viz'),cx=cv.getContext('2d');
+const playI='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>',pauseI='<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg>';
+pp.innerHTML=playI;
+const fmt=t=>isFinite(t)?Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0'):'0:00';
+let an=null,data=null;
+function initAn(){if(an)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const src=ac.createMediaElementSource(song);an=ac.createAnalyser();an.fftSize=64;data=new Uint8Array(an.frequencyBinCount);src.connect(an);an.connect(ac.destination)}catch(e){an=false}}
+pp.onclick=async()=>{initAn();try{if(ac&&ac.state==='suspended')await ac.resume()}catch(e){}if(song.paused){try{await song.play()}catch(e){toast('No se pudo reproducir la canción')}}else song.pause()};
+song.addEventListener('play',()=>{pp.innerHTML=pauseI;pp.setAttribute('aria-label','Pausar canción');kfig.classList.add('playing');draw()});
+song.addEventListener('pause',()=>{pp.innerHTML=playI;pp.setAttribute('aria-label','Reproducir canción');kfig.classList.remove('playing')});
+song.addEventListener('loadedmetadata',()=>$('#tdur').textContent=fmt(song.duration));
+song.addEventListener('timeupdate',()=>{const p=song.duration?song.currentTime/song.duration:0;seek.value=Math.round(p*1000);seek.style.setProperty('--p',p*100+'%');$('#tcur').textContent=fmt(song.currentTime)});
+song.addEventListener('ended',()=>{seek.value=0;seek.style.setProperty('--p','0%')});
+seek.addEventListener('input',()=>{if(song.duration)song.currentTime=seek.value/1000*song.duration;seek.style.setProperty('--p',seek.value/10+'%')});
+function draw(){const W=cv.width,H=cv.height,n=12;cx.clearRect(0,0,W,H);const col=getComputedStyle(document.documentElement).getPropertyValue('--acc').trim()||'#ff8a6b';cx.fillStyle=col;
+ for(let i=0;i<n;i++){let v;if(an&&data){an.getByteFrequencyData(data);v=data[Math.min(i*2+1,data.length-1)]/255}else{v=song.paused?.1:.3+.6*Math.abs(Math.sin(Date.now()/180+i))}const h=Math.max(3,v*H);const x=i*(W/n)+1;cx.beginPath();cx.roundRect?cx.roundRect(x,H-h,W/n-3,h,2):cx.rect(x,H-h,W/n-3,h);cx.fill()}
+ if(!song.paused)requestAnimationFrame(draw)}
+draw();
+let candles=0,shown=0;
+const goals=[30,100,250,500,1000,5000,10000];
+const fr=$('#flames'),cn=$('#cnum');
+function drawFlames(isNew){const cap=Math.max(3,Math.floor((fr.clientWidth+6)/18));let html='';
+ if(candles<=cap)html='<span class="fl"></span>'.repeat(candles);
+ else html='<span class="fl"></span>'.repeat(cap-3)+`<span class="cmore">+${(candles-(cap-3)).toLocaleString('es')}</span>`;
+ fr.innerHTML=html;if(isNew&&candles<=cap){const l=fr.lastElementChild;l&&l.animate&&l.animate([{transform:'scale(0) translateY(10px)',opacity:0},{transform:'scale(1.3)',opacity:1},{transform:'scale(1)'}],{duration:500,easing:'cubic-bezier(.2,1.4,.4,1)'})}}
+function drawGoal(){const g=goals.find(x=>candles<x)||Math.ceil((candles+1)/10000)*10000;const prev=goals.filter(x=>x<=candles).pop()||0;
+ $('#gfill').style.width=Math.min(100,(candles-prev)/(g-prev)*100)+'%';
+ $('#glabel').textContent=g===30?`${candles} de 30: una vela por cada año de su vida`:`Próxima meta: ${g.toLocaleString('es')} velas`}
+function countTo(n){const from=shown,t0=performance.now(),d=Math.min(900,250+Math.abs(n-from)*40);cancelAnimationFrame(countTo.r);
+ const step=t=>{const k=Math.min(1,(t-t0)/d),e=1-Math.pow(1-k,3);shown=Math.round(from+(n-from)*e);cn.textContent=shown.toLocaleString('es');if(k<1)countTo.r=requestAnimationFrame(step)};countTo.r=requestAnimationFrame(step);
+ cn.classList.remove('bump');void cn.offsetWidth;cn.classList.add('bump');setTimeout(()=>cn.classList.remove('bump'),260)}
+const drawC=isNew=>{$('#clabel').textContent=candles===1?'vela encendida':'velas encendidas';drawFlames(isNew);drawGoal()};
+cn.textContent=candles.toLocaleString('es');drawC(false);
+if('ResizeObserver' in window){const cro=new ResizeObserver(()=>drawFlames(false));cro.observe(fr)}
+/* velas, muro y anuncios: data/site.json (GitHub) + buzón de Google para lo que envían los visitantes */
+const cnote=$('#cnote'),mnote=$('#mnote'),T=window.TLStore,V=T?T.visitor:null,RM=T?T.remote:{enabled:false};
+let base=0,remoteN=0,official=[];
+const calc=()=>base+(RM.enabled?remoteN+V.pendingVelas():(V?V.velas():0));
+const setTotal=(n,isNew)=>{if(n!==candles||isNew){candles=n;countTo(n);drawC(isNew)}};
+let flushing=false;
+async function flushVelas(){if(!RM.enabled||flushing)return;flushing=true;
+ try{while(V.pendingVelas()>0){const n=await RM.addVela();V.setPendingVelas(V.pendingVelas()-1);remoteN=Math.max(remoteN,n)}}catch(e){}
+ flushing=false;setTotal(calc(),false)}
+$('#candle').onclick=()=>{if(!V)return;if(RM.enabled)V.setPendingVelas(V.pendingVelas()+1);else V.addVela();
+ setTotal(calc(),true);sfx.bell();
+ if(goals.includes(candles))toast(candles===30?'30 velas: una por cada año de Komanche 🕯️':`¡Meta alcanzada: ${candles.toLocaleString('es')} velas! 🕯️`);else toast('Vela encendida por Komanche 🕯️');
+ flushVelas()};
+const ago=t=>{if(!t)return'';const m=Math.round((Date.now()-t)/60000);if(m<1)return'ahora';if(m<60)return`hace ${m} min`;const h=Math.round(m/60);if(h<24)return`hace ${h} h`;const d=Math.round(h/24);return d<30?`hace ${d} d`:new Date(t).toLocaleDateString('es')};
+function renderWall(){const w=$('#wall');w.textContent='';
+ const mine=V?V.msgs().filter(m=>!(m.rid&&official.some(o=>o.id==='gs'+m.rid))).map(m=>({...m,mine:true})):[];
+ const list=[...mine,...official].sort((a,b)=>(b.at||0)-(a.at||0)).slice(0,80);
+ $('#mcount').textContent=official.length?`${official.length} ${official.length===1?'mensaje':'mensajes'} en el muro`:'';
+ if(!list.length){const e=document.createElement('div');e.className='wempty glass';e.textContent='Todavía no hay mensajes. Sé el primero en dejar unas palabras.';w.appendChild(e);return}
+ list.forEach((m,i)=>{const c=document.createElement('article');c.className='wcard glass'+(m.mine?' mine':'');c.style.animationDelay=Math.min(i,12)*40+'ms';
+  const p=document.createElement('p');p.textContent=String(m.t||'').slice(0,140);
+  const f=document.createElement('footer');const b=document.createElement('b');b.textContent='🕯️ '+(String(m.n||'').slice(0,30)||'Fan anónimo');const s2=document.createElement('span');
+  s2.textContent=(ago(m.at)?'· '+ago(m.at):'')+(m.mine?(m.rid?' · enviado, pendiente de aprobación':' · solo lo ves tú'):'');f.append(b,s2);c.append(p,f);
+  if(m.mine){const row=document.createElement('div');row.className='wact';const d=document.createElement('button');d.type='button';d.textContent='Ocultar';d.title='Quita esta copia de tu navegador';d.onclick=()=>{V.delMsg(m.id);renderWall()};row.appendChild(d);c.appendChild(row)}
+  w.appendChild(c)})}
+const mt=$('#mtext'),mn=$('#mname'),mbtn=$('#mform button[type=submit]');mn.value=store.get('tl-name','');
+mt.addEventListener('input',()=>$('#mleft').textContent=140-mt.value.length);
+let sending=false;
+$('#mform').addEventListener('submit',async e=>{e.preventDefault();const t=mt.value.trim(),n=mn.value.trim();if(!t||!V||sending)return;store.set('tl-name',n);
+ if(RM.enabled){sending=true;mbtn.disabled=true;mbtn.textContent='Enviando…';
+  try{const rid=await RM.sendMsg(t,n);V.addMsg(t,n,rid);mt.value='';$('#mleft').textContent=140;renderWall();sfx.bell();toast('¡Enviado! Aparecerá en el muro cuando se apruebe 🕯️')}
+  catch(er){toast(er&&er.message==='lleno'?'El buzón está lleno por ahora. Inténtalo más tarde.':'No se pudo enviar. Revisa tu conexión e inténtalo otra vez.')}
+  sending=false;mbtn.disabled=false;mbtn.textContent='Enviar mensaje'}
+ else{V.addMsg(t,n);mt.value='';$('#mleft').textContent=140;renderWall();sfx.bell();toast('Mensaje guardado 🕯️')}});
+
+/* anuncios (Adsterra u otro) en iframes aislados, con carga diferida */
+const adState={cfg:null,mob:null};
+function adDoc(code){return '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base target="_blank"><style>html,body{margin:0;padding:0;background:transparent;overflow:hidden;display:flex;justify-content:center;align-items:center;min-height:100%}</style></head><body>'+code+'</body></html>'}
+function renderAds(){const c=adState.cfg;if(!c)return;const mob=matchMedia('(max-width:740px)').matches;adState.mob=mob;
+ document.querySelectorAll('.ad[data-slot]').forEach(el=>{const s=c.slots[el.dataset.slot];const code=s&&(mob&&s.mob.trim()?s.mob:s.desk).trim();
+  const on=c.enabled&&s&&s.on&&!!code;el.hidden=!on;const box=el.querySelector('.adbox');box.textContent='';if(!on)return;
+  const h=mob?s.hm:s.hd;box.style.height=h+'px';
+  const load=()=>{const f=document.createElement('iframe');f.title='Publicidad';f.loading='lazy';f.setAttribute('scrolling','no');
+   f.setAttribute('sandbox','allow-scripts allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation'+(s.compat?' allow-same-origin':''));
+   f.style.height=h+'px';f.srcdoc=adDoc(code);box.appendChild(f)};
+  if('IntersectionObserver' in window){const o=new IntersectionObserver(x=>{if(x[0].isIntersecting){o.disconnect();load()}},{rootMargin:'300px'});o.observe(el)}else load()})}
+addEventListener('resize',()=>{if(adState.cfg&&matchMedia('(max-width:740px)').matches!==adState.mob)renderAds()});
+
+(async()=>{
+ if(!T){renderWall();return}
+ if(RM.enabled){mbtn.textContent='Enviar mensaje';mnote.textContent='Se envía al administrador para aprobarlo. No necesitas registrarte.';cnote.textContent='Velas de toda la comunidad'}
+ else{mnote.textContent='Tu mensaje se guarda en este navegador';cnote.textContent='Velas oficiales + las tuyas'}
+ setTotal(calc(),false);renderWall();
+ const remoteP=RM.enabled?RM.velas().then(n=>{remoteN=n}).catch(()=>{cnote.textContent='No se pudo leer el contador compartido; se reintentará'}):Promise.resolve();
+ const {site,source}=await T.loadSite();
+ base=site.velas;official=site.mensajes;renderWall();
+ adState.cfg=site.ads;renderAds();
+ await remoteP;setTotal(calc(),false);flushVelas();
+ if(source==='demo')cnote.textContent='Modo demo: velas del panel + las tuyas';
+})();
+
+/* mini reproductor fijo */
+const mini=$('#mini'),mpp=$('#mpp');let pVis=true,dismissed=false;
+const updMini=()=>{const on=(!song.paused||(song.currentTime>0&&!song.ended))&&!pVis&&!dismissed;mini.classList.toggle('show',on);mini.setAttribute('aria-hidden',!on);document.body.classList.toggle('mini-on',on)};
+if('IntersectionObserver' in window){const pio=new IntersectionObserver(x=>{pVis=x[0].isIntersecting;updMini()});pio.observe($('#player'))}
+mpp.innerHTML=pauseI;
+song.addEventListener('play',()=>{dismissed=false;mpp.innerHTML=pauseI;mpp.setAttribute('aria-label','Pausar canción');updMini()});
+song.addEventListener('pause',()=>{mpp.innerHTML=playI;mpp.setAttribute('aria-label','Reproducir canción');updMini()});
+song.addEventListener('ended',updMini);
+song.addEventListener('timeupdate',()=>{$('#mprog').style.width=(song.duration?song.currentTime/song.duration*100:0)+'%'});
+mpp.onclick=()=>pp.click();
+$('#mx').onclick=()=>{song.pause();dismissed=true;updMini()};
+}
+</script>
+</body>
+</html>
