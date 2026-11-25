@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Panel · TortillaLand</title>
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" href="img/icons/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#fff7f1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#17142a" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: herramienta clara y tranquila, misma familia visual que el sitio
+   IDEA: un tablero de vidrio sobre el mismo cielo pastel de TortillaLand
+   PICTURE: el propio panel: pestañas, tarjetas de espacios publicitarios con vista previa en vivo
+   COLOUR and TYPE: pasteles melocotón/menta/lavanda, tinta ciruela; Outfit + DM Sans
+   LAYOUT: barra lateral + contenido; en móvil pestañas arriba y una columna */
+:root{--bg:#fff7f1;--ink:#2b2338;--mut:#655c74;--peach:#ffd3c2;--butter:#ffeeb0;--mint:#c9f0dc;--sky:#cfe6ff;--lav:#e3dbff;--acc:#ff8a6b;--ok:#2f9e6e;--bad:#d9534f;--glass:rgba(255,255,255,.6);--line:rgba(255,255,255,.8);--surf:rgba(255,255,255,.85);--field:#fff;--blob:.7;color-scheme:light}
+:root[data-mode=dark]{color-scheme:dark;--bg:#17142a;--ink:#f3eefc;--mut:#b9b0cf;--peach:#6b3f52;--butter:#5c4d2e;--mint:#22514a;--sky:#26406b;--lav:#3f3470;--acc:#ffa58a;--ok:#5fd3a0;--bad:#ff8a85;--glass:rgba(42,36,72,.55);--line:rgba(255,255,255,.12);--surf:rgba(255,255,255,.08);--field:rgba(255,255,255,.06);--blob:.4}
+*{box-sizing:border-box;min-width:0}
+[hidden]{display:none!important}
+.mobonly{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "DM Sans",system-ui,sans-serif;min-height:100vh;transition:background .4s,color .4s}
+h1,h2,h3{font-family:Outfit,system-ui,sans-serif;margin:0;line-height:1.1;letter-spacing:-.02em}
+h1{font-size:28px}h2{font-size:24px;margin-bottom:4px}h3{font-size:18px}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.blobs{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.blobs i{position:absolute;border-radius:50%;filter:blur(80px);opacity:var(--blob)}
+.blobs i:nth-child(1){width:42vw;height:42vw;background:var(--peach);left:-10vw;top:-12vw}
+.blobs i:nth-child(2){width:36vw;height:36vw;background:var(--mint);right:-8vw;top:30vh}
+.blobs i:nth-child(3){width:34vw;height:34vw;background:var(--lav);left:30vw;bottom:-14vw}
+.glass{background:var(--glass);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 36px rgba(120,80,90,.10)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;border:0;background:var(--ink);color:var(--bg);font-weight:700;text-decoration:none;transition:transform .15s,opacity .2s}
+.btn:hover{transform:translateY(-1px)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn.soft{background:var(--surf);color:var(--ink);border:1px solid var(--line)}
+.btn.danger{background:var(--bad);color:#fff}
+.btn.sm{min-height:36px;padding:0 14px;font-size:14px}
+.ib{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--surf);display:grid;place-items:center}
+.ib svg{width:18px;height:18px}
+.field{display:grid;gap:6px}
+.field>span{font-size:13px;font-weight:700}
+.field small{color:var(--mut);font-size:12.5px}
+input[type=text],input[type=email],input[type=password],input[type=number],input[type=search],textarea{width:100%;background:var(--field);border:1px solid var(--line);border-radius:14px;padding:11px 14px;font-size:16px;outline:0}
+input:focus,textarea:focus{border-color:var(--acc)}
+textarea{font:13px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;resize:vertical;min-height:96px}
+.muted{color:var(--mut)}
+/* login */
+.center{min-height:100vh;display:grid;place-items:center;padding:20px}
+.login{width:min(420px,100%);padding:30px;display:grid;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font:800 20px Outfit}
+.brand i{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a8,#f3b24c);box-shadow:inset -3px -4px 0 rgba(180,110,30,.25)}
+.err{color:var(--bad);font-size:14px;min-height:20px}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12.5px;font-weight:700;background:var(--mint)}
+.badge.demo{background:var(--butter)}
+/* app */
+.app{display:grid;grid-template-columns:240px minmax(0,1fr);gap:20px;padding:20px;max-width:1360px;margin:0 auto}
+.side{padding:18px;display:flex;flex-direction:column;gap:6px;position:sticky;top:20px;align-self:start}
+.side .brand{margin-bottom:12px}
+.tabbtn{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:14px;border:0;background:transparent;text-align:left;font-weight:700;color:var(--mut)}
+.tabbtn svg{width:18px;height:18px;flex:none}
+.tabbtn[aria-selected=true]{background:var(--ink);color:var(--bg)}
+.tabbtn:not([aria-selected=true]):hover{background:var(--surf);color:var(--ink)}
+.side .foot{margin-top:auto;padding-top:16px;display:grid;gap:8px;font-size:13px}
+.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;margin-bottom:18px}
+.top h1{margin-right:auto}
+.panel{display:none;gap:18px}.panel.on{display:grid}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.stat{padding:18px}.stat b{display:block;font:800 34px/1 Outfit;margin-bottom:6px}.stat span{color:var(--mut);font-size:14px}
+.stat:nth-child(1){background:color-mix(in srgb,var(--peach) 55%,transparent)}.stat:nth-child(2){background:color-mix(in srgb,var(--mint) 55%,transparent)}.stat:nth-child(3){background:color-mix(in srgb,var(--butter) 60%,transparent)}.stat:nth-child(4){background:color-mix(in srgb,var(--sky) 60%,transparent)}
+.card{padding:20px}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+/* switch */
+.sw{display:inline-flex;align-items:center;gap:10px;font-weight:700;cursor:pointer;user-select:none}
+.sw input{position:absolute;opacity:0;width:1px;height:1px}
+.sw i{width:46px;height:26px;border-radius:99px;background:rgba(128,110,150,.35);position:relative;transition:background .2s;flex:none}
+.sw i:after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.2);transition:transform .2s}
+.sw input:checked+i{background:var(--ok)}.sw input:checked+i:after{transform:translateX(20px)}
+.sw input:focus-visible+i{outline:3px solid var(--acc);outline-offset:2px}
+.slot{padding:20px;display:grid;gap:14px}
+.slot header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.slot header p{margin:4px 0 0;color:var(--mut);font-size:14px}
+.chip{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--lav)}
+.prev{border-radius:16px;border:1px dashed var(--mut);padding:10px;display:grid;gap:8px;justify-items:center;background:var(--surf)}
+.prev iframe{border:0;width:100%;background:transparent}
+.prev .pw{display:flex;gap:6px}
+.savebar{position:sticky;bottom:14px;z-index:5;display:flex;align-items:center;gap:12px;padding:12px 16px;flex-wrap:wrap}
+.savebar span{margin-right:auto;font-size:14px}
+.dirty{color:var(--acc);font-weight:700}
+/* mensajes */
+.mlist{display:grid;gap:10px}
+.mitem{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:start;padding:14px 16px;border-radius:18px}
+.mitem p{margin:0 0 6px;overflow-wrap:anywhere}
+.mitem small{color:var(--mut)}
+.empty{padding:28px;text-align:center;color:var(--mut)}
+.big{font:800 clamp(48px,8vw,80px)/1 Outfit;letter-spacing:-.03em;background:linear-gradient(180deg,#ffb35c,#ff7a6b);-webkit-background-clip:text;background-clip:text;color:transparent}
+code.uid{display:block;padding:10px 12px;border-radius:12px;background:var(--surf);font-size:13px;overflow-wrap:anywhere}
+ol.steps{margin:0;padding-left:20px;display:grid;gap:6px}
+/* modal + toast */
+dialog{border:0;border-radius:24px;padding:24px;max-width:420px;width:calc(100% - 32px);background:var(--bg);color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(20,15,35,.45);backdrop-filter:blur(6px)}
+dialog p{color:var(--mut)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,120px);padding:12px 20px;border-radius:999px;font-weight:700;transition:transform .35s;z-index:50}
+.toast.show{transform:translate(-50%,0)}
+@media(max-width:900px){.app{grid-template-columns:1fr;padding:12px}.side{position:static;flex-direction:row;flex-wrap:wrap;align-items:center}.side .brand{margin:0 auto 0 0}.side .foot{display:none}.mobonly{display:inline-flex!important}.tabbtn{padding:9px 12px}.tabbtn span{display:none}.stats,.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.pill-n{margin-left:auto;min-width:22px;height:22px;padding:0 6px;border-radius:99px;background:var(--acc);color:#fff;font-size:12px;display:grid;place-items:center}
+#saveBar{margin-top:18px}
+.login a{color:var(--acc)}
+.login .grid2{grid-template-columns:repeat(2,minmax(0,1fr))}
+code{font-size:13px}
+</style>
+</head>
+<body>
+<div class="blobs" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<!-- CONECTAR -->
+<main class="center" id="vLogin" hidden>
+  <form class="login glass" id="loginForm" autocomplete="off">
+    <div class="brand"><i></i>TortillaLand · Panel</div>
+    <p class="muted" style="margin:0">Los datos del sitio se guardan en <b>data/site.json</b> de tu repositorio. Conéctate con un token de GitHub para editarlos.</p>
+    <div class="grid2" style="gap:10px">
+      <label class="field"><span>Usuario de GitHub</span><input type="text" id="gOwner" required spellcheck="false"></label>
+      <label class="field"><span>Repositorio</span><input type="text" id="gRepo" required spellcheck="false"></label>
+    </div>
+    <label class="field"><span>Rama</span><input type="text" id="gBranch" value="main" required spellcheck="false"></label>
+    <label class="field"><span>Token de GitHub</span><input type="password" id="gToken" required spellcheck="false" placeholder="github_pat_…">
+      <small>Créalo en <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub › Fine-grained tokens</a>: solo este repositorio, permiso <b>Contents</b> en “Read and write”.</small></label>
+    <label class="sw" style="font-weight:500"><input type="checkbox" id="gRemember"><i></i><span>Recordar en este navegador</span></label>
+    <button class="btn" type="submit" id="lBtn">Conectar</button>
+    <div class="err" id="lErr" role="alert"></div>
+    <div class="row" style="justify-content:space-between"><a href="index.html" class="muted" style="font-size:14px">← Volver al sitio</a><button class="btn soft sm" type="button" id="demoBtn">Probar en modo demo</button></div>
+  </form>
+</main>
+
+<!-- APP -->
+<div class="app" id="vApp" hidden>
+  <nav class="side glass" role="tablist" aria-label="Secciones del panel">
+    <div class="brand"><i></i>Panel</div>
+    <button class="tabbtn" role="tab" data-tab="resumen" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg><span>Resumen</span></button>
+    <button class="tabbtn" role="tab" data-tab="anuncios" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 15l2.5-6L12 15M7.8 13h3.4M15 9v6h1.5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2z"/></svg><span>Anuncios</span></button>
+    <button class="tabbtn" role="tab" data-tab="mensajes" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span>Mensajes</span><b class="pill-n" id="pendBadge" hidden></b></button>
+    <button class="tabbtn" role="tab" data-tab="velas" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3c2 2.5 3 4 3 5.5a3 3 0 0 1-6 0C9 7 10 5.5 12 3z"/><rect x="9" y="12" width="6" height="9" rx="1.5"/></svg><span>Velas</span></button>
+    <div class="foot"><span class="muted" id="who"></span><a class="btn soft sm" id="siteLink" href="index.html" target="_blank" rel="noopener">Ver el sitio ↗</a><button class="btn soft sm" id="outBtn" type="button">Desconectar</button></div>
+  </nav>
+
+  <main>
+    <header class="top glass">
+      <h1 id="title">Resumen</h1>
+      <span class="badge" id="modeBadge"></span>
+      <button class="ib" id="reloadBtn" aria-label="Recargar datos desde GitHub" title="Recargar desde GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg></button>
+      <button class="ib" id="modeBtn" aria-label="Cambiar modo día o noche"></button>
+      <a class="btn soft sm mobonly" href="index.html" target="_blank" rel="noopener">Sitio ↗</a><button class="btn soft sm mobonly" id="outBtn2" type="button">Salir</button>
+    </header>
+
+    <!-- RESUMEN -->
+    <section class="panel on" id="p-resumen" role="tabpanel">
+      <div class="stats">
+        <div class="stat glass"><b id="sVelas">0</b><span>velas en total</span></div>
+        <div class="stat glass"><b id="sMsgs">0</b><span>mensajes publicados</span></div>
+        <div class="stat glass"><b id="sPend">0</b><span>mensajes por aprobar</span></div>
+        <div class="stat glass"><b id="sAds">0/3</b><span>anuncios activos</span></div>
+      </div>
+      <div class="grid2">
+        <div class="card glass"><h3>Últimos mensajes publicados</h3><div class="mlist" id="lastMsgs" style="margin-top:12px"></div></div>
+        <div class="card glass"><h3>Cómo funciona</h3>
+          <ol class="steps" style="margin-top:12px">
+            <li>Todo lo que cambias aquí queda como <b>borrador</b>.</li>
+            <li>Pulsa <b>Publicar cambios</b>: el panel guarda <code>data/site.json</code> en GitHub.</li>
+            <li>GitHub Pages actualiza el sitio en <b>1–2 minutos</b>.</li>
+            <li>Los visitantes envían mensajes sin registrarse al buzón de Google; los apruebas en <b>Mensajes</b>.</li>
+          </ol>
+          <p class="muted" style="margin:12px 0 0;font-size:14px" id="lastUpd"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ANUNCIOS -->
+    <section class="panel" id="p-anuncios" role="tabpanel">
+      <div class="card glass row" style="justify-content:space-between">
+        <div><h3>Anuncios en el sitio</h3><p class="muted" style="margin:4px 0 0">Interruptor general: apágalo para ocultar todos los anuncios.</p></div>
+        <label class="sw"><input type="checkbox" id="adsAll"><i></i><span id="adsAllTxt">Activados</span></label>
+      </div>
+      <div id="slots" style="display:grid;gap:16px"></div>
+    </section>
+
+    <!-- MENSAJES -->
+    <section class="panel" id="p-mensajes" role="tabpanel">
+      <div class="card glass" style="display:grid;gap:12px">
+        <div class="row" style="justify-content:space-between"><h3>Por aprobar <small class="muted" id="pendInfo"></small></h3><button class="btn soft sm" id="pendReload" type="button">Buscar nuevos</button></div>
+        <form class="row" id="keyForm" hidden><input type="password" id="keyIn" placeholder="Clave del buzón (CLAVE_ADMIN del script)" aria-label="Clave del buzón" style="flex:1 1 240px" autocomplete="off"><button class="btn sm" type="submit">Guardar clave</button></form>
+        <div class="mlist" id="pendList"></div>
+      </div>
+      <form class="card glass" id="addForm" style="display:grid;gap:10px">
+        <h3>Añadir un mensaje a mano</h3>
+        <div class="grid2" style="gap:10px"><input type="text" id="aName" maxlength="30" placeholder="Nombre (opcional)" aria-label="Nombre"><input type="text" id="aText" maxlength="140" placeholder="Mensaje (máx. 140)" aria-label="Mensaje" required></div>
+        <div><button class="btn sm" type="submit">Añadir al borrador</button></div>
+      </form>
+      <div class="card glass row">
+        <h3 style="margin-right:auto">Publicados</h3>
+        <input type="search" id="mSearch" placeholder="Buscar…" aria-label="Buscar mensajes" style="flex:0 1 260px">
+        <span class="muted" id="mTotal"></span>
+      </div>
+      <div class="mlist" id="mList"></div>
+    </section>
+
+    <!-- VELAS -->
+    <section class="panel" id="p-velas" role="tabpanel">
+      <div class="card glass" id="rvCard" style="display:grid;gap:12px">
+        <div><span class="muted">Velas encendidas por los visitantes (buzón de Google, se actualiza al instante)</span><div class="big" id="rvBig">—</div></div>
+        <div class="row"><button class="btn soft sm" id="rvReload" type="button">Actualizar</button><button class="btn danger sm" id="rvReset" type="button">Poner a 0</button></div>
+        <p class="muted" style="margin:0;font-size:14px" id="rvNote"></p>
+      </div>
+      <div class="card glass" style="display:grid;gap:16px">
+        <div><span class="muted">Velas extra oficiales (se suman al contador; se aplican al publicar)</span><div class="big" id="vBig">0</div></div>
+        <div class="row">
+          <button class="btn soft" type="button" data-dv="-10">−10</button><button class="btn soft" type="button" data-dv="-1">−1</button><button class="btn soft" type="button" data-dv="1">+1</button><button class="btn soft" type="button" data-dv="10">+10</button><button class="btn soft" type="button" data-dv="100">+100</button>
+        </div>
+        <div class="row">
+          <label class="field" style="flex:0 1 200px"><span>Fijar en</span><input type="number" id="vSet" min="0" step="1"></label>
+          <button class="btn soft" id="vSetBtn" type="button" style="align-self:end">Fijar</button>
+          <button class="btn danger" id="vReset" type="button" style="align-self:end">Poner a 0</button>
+        </div>
+        <p class="muted" style="margin:0;font-size:14px">Total que ven los visitantes = velas del buzón + estas velas extra. Úsalas, por ejemplo, para sumar las velas que te reporten en redes.</p>
+      </div>
+    </section>
+
+    <div class="savebar glass" id="saveBar"><span id="saveState" class="muted">Sin cambios</span><button class="btn soft sm" id="revertBtn" type="button" disabled>Descartar</button><button class="btn" id="saveBtn" type="button" disabled>Publicar cambios</button></div>
+  </main>
+</div>
+
+<dialog id="dlg"><h3 id="dTitle"></h3><p id="dText"></p><div class="row" style="justify-content:flex-end"><button class="btn soft" id="dNo" type="button">Cancelar</button><button class="btn danger" id="dYes" type="button">Confirmar</button></div></dialog>
+<div class="toast glass" id="toast" role="status"></div>
+
+<script src="config.js"></script>
+<script src="js/store.js"></script>
+<script>
+{
+const $=s=>document.querySelector(s);
+const S=TLStore,ls=S.ls;
+const toast=t=>{const el=$('#toast');el.textContent=t;el.classList.add('show');clearTimeout(toast.h);toast.h=setTimeout(()=>el.classList.remove('show'),2600)};
+function confirmBox(title,text,yes){return new Promise(res=>{const d=$('#dlg');$('#dTitle').textContent=title;$('#dText').textContent=text;$('#dYes').textContent=yes||'Confirmar';
+ const done=v=>{d.close();$('#dYes').onclick=$('#dNo').onclick=null;res(v)};$('#dYes').onclick=()=>done(true);$('#dNo').onclick=()=>done(false);d.oncancel=()=>res(false);d.showModal()})}
+
+/* modo día / noche */
+const root=document.documentElement;
+const sunI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',moonI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
+let mode=ls.get('tl-mode',null)||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+const setMode=m=>{mode=m;root.dataset.mode=m;$('#modeBtn').innerHTML=m==='dark'?sunI:moonI};setMode(mode);
+$('#modeBtn').onclick=()=>{setMode(mode==='dark'?'light':'dark');ls.set('tl-mode',mode)};
+
+const SLOTS=[
+ {id:'episodios',name:'Entre “Episodios” y “Creadores”',fmt:'Banner 728×90 en computadora · 320×50 en móvil',where:'A mitad de la página, entre dos secciones.'},
+ {id:'participantes',name:'Debajo de la lista de participantes',fmt:'Native Banner o 300×250',where:'Justo antes del homenaje (el homenaje nunca lleva anuncios).'},
+ {id:'pie',name:'Antes del pie de página',fmt:'Banner 728×90 en computadora · 320×50 en móvil',where:'Al final, cuando la persona ya vio todo.'}];
+
+let cli=null,saved=null,sha=null,draft=null,pending=[],queued={},remoteN=null;   // queued: id del buzón -> 'aprobado' | 'rechazado'
+const RM=S.remote;let bkey=ls.get('tl-buzon-key','');
+const views={login:$('#vLogin'),app:$('#vApp')};
+const show=v=>Object.entries(views).forEach(([k,el])=>el.hidden=k!==v);
+const clone=o=>JSON.parse(JSON.stringify(o));
+
+/* pestañas */
+const titles={resumen:'Resumen',anuncios:'Anuncios',mensajes:'Mensajes',velas:'Velas'};
+function tab(t){if(!titles[t])t='resumen';document.querySelectorAll('.tabbtn').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+t));$('#title').textContent=titles[t];ls.set('tl-admin-tab',t)}
+document.querySelectorAll('.tabbtn').forEach(b=>b.onclick=()=>tab(b.dataset.tab));
+
+/* borrador y publicación */
+const isDirty=()=>!!draft&&(JSON.stringify(S.normSite(draft))!==JSON.stringify(S.normSite(saved))||Object.keys(queued).length>0);
+function markDirty(){const d=isDirty();$('#saveBtn').disabled=!d;$('#revertBtn').disabled=!d;$('#saveState').textContent=d?'Tienes cambios sin publicar':'Sin cambios · todo publicado';$('#saveState').className=d?'dirty':'muted';renderStats()}
+function summary(){const a=S.normSite(saved),b=S.normSite(draft),parts=[];
+ if(JSON.stringify(a.ads)!==JSON.stringify(b.ads))parts.push('anuncios');
+ if(a.velas!==b.velas)parts.push('velas '+a.velas+'→'+b.velas);
+ const na=b.mensajes.filter(m=>!a.mensajes.some(x=>x.id===m.id)).length,nq=a.mensajes.filter(m=>!b.mensajes.some(x=>x.id===m.id)).length;
+ if(na)parts.push(na+' mensaje(s) nuevo(s)');if(nq)parts.push(nq+' mensaje(s) quitado(s)');
+ return 'Panel: '+(parts.join(', ')||'actualizar datos')}
+$('#saveBtn').onclick=async()=>{$('#saveBtn').disabled=true;$('#saveState').textContent='Publicando en GitHub…';$('#saveState').className='muted';
+ try{const r=await cli.save(draft,sha,summary());saved=r.site;sha=r.sha;draft=clone(saved);
+  const q=queued;queued={};
+  if(Object.keys(q).length&&RM.enabled&&bkey){try{await RM.mark(bkey,q)}catch(e){toast('Publicado, pero no se pudo marcar en el buzón: '+e.message)}}
+  pending=pending.filter(p=>!q[p.id]);
+  fillAll();toast(cli.mode==='demo'?'Guardado (modo demo)':'Publicado ✓ El sitio se actualiza en 1–2 minutos')}
+ catch(e){if(e.status===409||e.status===422){toast('El archivo cambió en GitHub. Recarga los datos y vuelve a aplicar tus cambios.')}else if(e.status===401||e.status===403){toast('GitHub rechazó el token: revisa sus permisos (Contents: Read and write).')}else toast('No se pudo publicar: '+(e.message||'error'))}
+ markDirty()};
+$('#revertBtn').onclick=()=>{draft=clone(saved);queued={};fillAll();markDirty()};
+addEventListener('beforeunload',e=>{if(isDirty()){e.preventDefault();e.returnValue=''}});
+
+/* ---------- anuncios ---------- */
+function adDoc(code){return '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base target="_blank"><style>html,body{margin:0;padding:0;background:transparent;overflow:hidden;display:flex;justify-content:center;align-items:center;min-height:100%}</style></head><body>'+code+'</body></html>'}
+function buildSlots(){$('#slots').innerHTML=SLOTS.map(s=>`<article class="slot glass" data-id="${s.id}">
+  <header><div><h3>${s.name}</h3><p>${s.where}</p><span class="chip">${s.fmt}</span></div><label class="sw"><input type="checkbox" data-k="on"><i></i><span>Activo</span></label></header>
+  <div class="grid2">
+   <label class="field"><span>Código para computadora</span><textarea data-k="desk" spellcheck="false" placeholder="Pega aquí el código de Adsterra (script)…"></textarea></label>
+   <label class="field"><span>Código para móvil <small>(opcional: si lo dejas vacío se usa el de computadora)</small></span><textarea data-k="mob" spellcheck="false" placeholder="Por ejemplo, el banner 320×50…"></textarea></label>
+  </div>
+  <div class="grid4">
+   <label class="field"><span>Alto en computadora (px)</span><input type="number" data-k="hd" min="30" max="800"></label>
+   <label class="field"><span>Alto en móvil (px)</span><input type="number" data-k="hm" min="30" max="800"></label>
+   <label class="field" style="grid-column:span 2"><span>Compatibilidad</span><label class="sw" style="font-weight:500"><input type="checkbox" data-k="compat"><i></i><span>Modo compatibilidad <small class="muted">(actívalo solo si el anuncio no aparece)</small></span></label></label>
+  </div>
+  <div class="row"><button class="btn soft sm" type="button" data-prev="desk">Vista previa computadora</button><button class="btn soft sm" type="button" data-prev="mob">Vista previa móvil</button></div>
+  <div class="prev" hidden></div>
+ </article>`).join('');
+ const onEdit=e=>{const el=e.target;if(!el.dataset||!el.dataset.k)return;const id=el.closest('.slot').dataset.id,k=el.dataset.k;draft.ads.slots[id][k]=el.type==='checkbox'?el.checked:el.type==='number'?(+el.value||0):el.value;markDirty()};
+ $('#slots').addEventListener('input',onEdit);$('#slots').addEventListener('change',onEdit);
+ $('#slots').addEventListener('click',e=>{const b=e.target.closest('[data-prev]');if(!b)return;const card=b.closest('.slot'),s=draft.ads.slots[card.dataset.id],mob=b.dataset.prev==='mob';
+  const code=(mob&&s.mob.trim()?s.mob:s.desk).trim();const pv=card.querySelector('.prev');pv.hidden=false;pv.textContent='';
+  const lab=document.createElement('span');lab.className='muted';lab.style.fontSize='13px';lab.textContent=code?(mob?'Vista previa móvil (320 px de ancho)':'Vista previa computadora'):'No hay código para mostrar';pv.appendChild(lab);
+  if(!code)return;const f=document.createElement('iframe');f.setAttribute('sandbox','allow-scripts allow-popups allow-popups-to-escape-sandbox'+(s.compat?' allow-same-origin':''));
+  f.style.height=(mob?s.hm:s.hd)+'px';f.style.maxWidth=mob?'320px':'970px';f.srcdoc=adDoc(code);pv.appendChild(f)})}
+$('#adsAll').addEventListener('change',e=>{draft.ads.enabled=e.target.checked;$('#adsAllTxt').textContent=draft.ads.enabled?'Activados':'Desactivados';markDirty()});
+function fillAds(){$('#adsAll').checked=draft.ads.enabled;$('#adsAllTxt').textContent=draft.ads.enabled?'Activados':'Desactivados';
+ document.querySelectorAll('.slot').forEach(card=>{const s=draft.ads.slots[card.dataset.id];card.querySelectorAll('[data-k]').forEach(el=>{const k=el.dataset.k;if(el.type==='checkbox')el.checked=!!s[k];else el.value=s[k]})})}
+const adsCount=a=>SLOTS.filter(s=>a.enabled&&a.slots[s.id].on&&a.slots[s.id].desk.trim()).length;
+
+/* ---------- mensajes ---------- */
+const fmtDate=t=>t?new Date(t).toLocaleString('es',{dateStyle:'medium',timeStyle:'short'}):'';
+function item(m,buttons,extra){const a=document.createElement('div');a.className='mitem glass';const box=document.createElement('div');const p=document.createElement('p');p.textContent=m.t;const sm=document.createElement('small');sm.textContent=(m.n||'Fan anónimo')+' · '+fmtDate(m.at)+(extra||'');box.append(p,sm);a.appendChild(box);
+ if(buttons&&buttons.length){const r=document.createElement('div');r.className='row';r.style.gap='6px';buttons.forEach(([txt,cls,fn])=>{const b=document.createElement('button');b.type='button';b.className='btn sm '+cls;b.textContent=txt;b.onclick=fn;r.appendChild(b)});a.appendChild(r)}return a}
+function renderMsgs(){const q=$('#mSearch').value.trim().toLowerCase();const all=draft.mensajes.slice().sort((a,b)=>b.at-a.at);
+ const list=all.filter(m=>!q||m.t.toLowerCase().includes(q)||m.n.toLowerCase().includes(q));
+ $('#mTotal').textContent=`${list.length} de ${all.length}`;const L=$('#mList');L.textContent='';
+ if(!list.length){const e=document.createElement('div');e.className='empty glass';e.textContent=all.length?'Ningún mensaje coincide.':'Todavía no hay mensajes publicados.';L.appendChild(e)}
+ else list.forEach(m=>{const isNew=!saved.mensajes.some(x=>x.id===m.id);L.appendChild(item(m,[['Quitar','soft',async()=>{if(!await confirmBox('¿Quitar este mensaje?','“'+m.t.slice(0,80)+'” saldrá del muro al publicar.','Quitar'))return;draft.mensajes=draft.mensajes.filter(x=>x.id!==m.id);fillMsgs();markDirty()}]],isNew?' · nuevo (sin publicar)':''))});
+ const R=$('#lastMsgs');R.textContent='';if(!all.length){const e=document.createElement('div');e.className='muted';e.textContent='Sin mensajes todavía.';R.appendChild(e)}else all.slice(0,5).forEach(m=>R.appendChild(item(m)))}
+function renderPending(){const L=$('#pendList');L.textContent='';const vis=pending.filter(p=>!queued[p.id]);
+ const badge=$('#pendBadge');badge.hidden=!vis.length;badge.textContent=vis.length;
+ $('#keyForm').hidden=!(RM.enabled&&!bkey);
+ if(!RM.enabled){$('#pendInfo').textContent='· buzón sin configurar';const e=document.createElement('div');e.className='muted';e.textContent='Para recibir mensajes sin registro, configura el buzón de Google (README, paso 3) y pon su URL en config.js.';L.appendChild(e);return}
+ if(!bkey){$('#pendInfo').textContent='· falta la clave';const e=document.createElement('div');e.className='muted';e.textContent='Escribe la clave CLAVE_ADMIN que pusiste en el script de Google.';L.appendChild(e);return}
+ $('#pendInfo').textContent=`· ${vis.length} en el buzón`;
+ if(!vis.length){const e=document.createElement('div');e.className='muted';e.textContent='No hay mensajes esperando aprobación.';L.appendChild(e);return}
+ vis.forEach(p=>L.appendChild(item(p,[
+  ['Aprobar','',()=>{draft.mensajes.push(S.normMsg({id:'gs'+p.id,t:p.t,n:p.n,at:p.at}));queued[p.id]='aprobado';fillMsgs();markDirty()}],
+  ['Rechazar','soft',()=>{queued[p.id]='rechazado';fillMsgs();markDirty()}]],'')))}
+function fillMsgs(){renderMsgs();renderPending()}
+$('#mSearch').addEventListener('input',renderMsgs);
+$('#addForm').addEventListener('submit',e=>{e.preventDefault();const m=S.normMsg({t:$('#aText').value,n:$('#aName').value,at:Date.now()});if(!m)return;draft.mensajes.push(m);$('#aText').value='';$('#aName').value='';fillMsgs();markDirty();toast('Añadido al borrador')});
+async function loadPending(){if(!RM.enabled||!bkey){renderPending();renderStats();return}
+ try{const r=await RM.pending(bkey);pending=r.list;remoteN=r.velas;fillRemote()}catch(e){pending=[];if(e.message==='clave'){bkey='';ls.del('tl-buzon-key');toast('La clave del buzón no es correcta')}else toast('No se pudo leer el buzón: '+(e.message||''))}
+ renderPending();renderStats()}
+$('#keyForm').addEventListener('submit',e=>{e.preventDefault();const k=$('#keyIn').value.trim();if(!k)return;bkey=k;ls.set('tl-buzon-key',k);$('#keyIn').value='';loadPending()});
+function fillRemote(){$('#rvCard').hidden=!RM.enabled;$('#rvBig').textContent=remoteN==null?'—':remoteN.toLocaleString('es');
+ $('#rvNote').textContent=!RM.enabled?'':bkey?'Poner a 0 se aplica al instante en el buzón.':'Guarda la clave del buzón (en Mensajes) para poder ponerlo a 0.';$('#rvReset').disabled=!bkey;renderStats()}
+async function reloadRemote(){if(!RM.enabled)return fillRemote();try{remoteN=await RM.velas()}catch(e){toast('No se pudo leer el buzón')}fillRemote()}
+$('#rvReload').onclick=reloadRemote;
+$('#rvReset').onclick=async()=>{if(!bkey)return;if(!await confirmBox('¿Poner a 0 las velas del buzón?','Se borra el contador de velas de los visitantes al instante. No se puede deshacer.','Poner a 0'))return;try{remoteN=await RM.setVelas(bkey,0);fillRemote();toast('Velas del buzón a 0')}catch(e){toast('No se pudo: '+e.message)}};
+$('#pendReload').onclick=loadPending;
+
+/* ---------- velas ---------- */
+const setV=n=>{draft.velas=Math.max(0,Math.floor(n)||0);fillVelas();markDirty()};
+document.querySelectorAll('[data-dv]').forEach(b=>b.onclick=()=>setV(draft.velas+(+b.dataset.dv)));
+$('#vSetBtn').onclick=()=>{const n=parseInt($('#vSet').value,10);if(!isFinite(n)||n<0)return toast('Escribe un número válido');setV(n)};
+$('#vReset').onclick=async()=>{if(await confirmBox('¿Poner las velas oficiales a 0?','Se aplicará al publicar los cambios.','Poner a 0'))setV(0)};
+function fillVelas(){$('#vBig').textContent=draft.velas.toLocaleString('es');if(document.activeElement!==$('#vSet'))$('#vSet').value=draft.velas}
+
+/* ---------- resumen ---------- */
+function renderStats(){if(!draft)return;$('#sVelas').textContent=(draft.velas+(remoteN||0)).toLocaleString('es');$('#sMsgs').textContent=draft.mensajes.length;$('#sPend').textContent=pending.filter(p=>!queued[p.id]).length;$('#sAds').textContent=adsCount(draft.ads)+'/3';
+ $('#lastUpd').textContent=saved&&saved.actualizado?'Última publicación: '+fmtDate(Date.parse(saved.actualizado)):'Aún no se ha publicado nada desde el panel.'}
+function fillAll(){fillAds();fillMsgs();fillVelas();renderStats()}
+
+/* ---------- conexión ---------- */
+async function connect(c,login){cli=c;const r=await cli.load();saved=r.site;sha=r.sha;draft=clone(saved);queued={};
+ show('app');if(!$('#slots').children.length)buildSlots();fillAll();markDirty();
+ const demo=cli.mode==='demo';$('#who').textContent=demo?'Modo demo':'@'+login;
+ $('#modeBadge').textContent=demo?'Modo demo · solo este navegador':cli.owner+'/'+cli.repo+' · '+cli.path;$('#modeBadge').className='badge'+(demo?' demo':'');
+ $('#siteLink').href=demo?'index.html?demo':'index.html';
+ tab(ls.get('tl-admin-tab','resumen'));fillRemote();reloadRemote();loadPending()}
+$('#reloadBtn').onclick=async()=>{if(isDirty()&&!await confirmBox('¿Recargar desde GitHub?','Perderás los cambios sin publicar.','Recargar'))return;try{const r=await cli.load();saved=r.site;sha=r.sha;draft=clone(saved);queued={};fillAll();markDirty();reloadRemote();loadPending();toast('Datos recargados')}catch(e){toast('No se pudo recargar: '+(e.message||''))}};
+async function logout(){if(isDirty()&&!await confirmBox('¿Desconectar?','Tienes cambios sin publicar que se perderán.','Desconectar'))return;
+ ls.del('tl-gh');try{sessionStorage.removeItem('tl-gh')}catch(e){}cli=null;draft=saved=null;queued={};$('#gToken').value='';show('login')}
+$('#outBtn').onclick=logout;$('#outBtn2').onclick=logout;
+$('#demoBtn').onclick=()=>connect(S.demoClient(),'demo');
+
+const ri=S.repoInfo();
+function readCreds(){let c=null;try{c=JSON.parse(sessionStorage.getItem('tl-gh'))}catch(e){}return c||ls.get('tl-gh',null)}
+const saved0=readCreds()||{};
+$('#gOwner').value=saved0.owner||ri.owner;$('#gRepo').value=saved0.repo||ri.repo;$('#gBranch').value=saved0.branch||ri.branch||'main';
+$('#loginForm').addEventListener('submit',async e=>{e.preventDefault();$('#lErr').textContent='';$('#lBtn').disabled=true;$('#lBtn').textContent='Conectando…';
+ const creds={owner:$('#gOwner').value.trim(),repo:$('#gRepo').value.trim(),branch:$('#gBranch').value.trim()||'main',token:$('#gToken').value.trim()};
+ try{const c=S.githubClient(Object.assign({path:ri.path},creds));const info=await c.check();
+  if(!info.canPush)throw Object.assign(new Error('Tu token no tiene permiso de escritura en este repositorio.'),{status:403});
+  if($('#gRemember').checked)ls.set('tl-gh',creds);else{ls.del('tl-gh');try{sessionStorage.setItem('tl-gh',JSON.stringify(creds))}catch(e){}}
+  await connect(c,info.login)}
+ catch(er){$('#lErr').textContent=er.status===401?'Token no válido o caducado.':er.status===404?'No se encontró el repositorio (revisa usuario, nombre y que el token tenga acceso a él).':(er.message||'No se pudo conectar.')}
+ $('#lBtn').disabled=false;$('#lBtn').textContent='Conectar'});
+
+(async()=>{const c=readCreds();
+ if(c&&c.token){try{const cl=S.githubClient(Object.assign({path:ri.path},c));const info=await cl.check();await connect(cl,info.login);return}catch(e){$('#lErr').textContent='La sesión guardada ya no es válida. Vuelve a conectar.'}}
+ show('login')})();
+}
+</script>
+</body>
+</html>
