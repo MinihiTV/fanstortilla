@@ -12,7 +12,7 @@ window.TL_CONFIG = {
      mensajes SIN registrarse y que las velas se cuenten entre todos.
      Pega aquí la URL de tu Apps Script (termina en /exec). Ver README.md, paso 3. */
   buzon: {
-    url: ""
+    url: "https://script.google.com/macros/s/AKfycbyziZCd8z0wXRi1LO_mZXSUnCwL1JTLqoROOCTfUwYLBh1rWFHnbXHvkeCfUQmtLYoP/exec"
   },
 
   github: {
