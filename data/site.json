@@ -4,15 +4,15 @@
     "enabled": true,
     "slots": {
       "episodios": {
-        "on": false,
-        "compat": false,
+        "on": true,
+        "compat": true,
         "desk": "",
         "mob": "",
         "hd": 90,
         "hm": 50
       },
       "participantes": {
-        "on": false,
+        "on": true,
         "compat": false,
         "desk": "",
         "mob": "",
@@ -20,7 +20,7 @@
         "hm": 250
       },
       "pie": {
-        "on": false,
+        "on": true,
         "compat": false,
         "desk": "",
         "mob": "",
@@ -42,5 +42,5 @@
       "at": 1795697566181
     }
   ],
-  "actualizado": "2026-11-26T12:52:47.852Z"
+  "actualizado": "2026-11-26T12:55:02.474Z"
 }
